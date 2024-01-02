@@ -20,28 +20,32 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="第五章 Cookie 和 Session1.蛋糕商城123456789101112131415161718192021222324252627public class PurchaseServlet extends HttpServlet &#123;    public void doGet(HttpServletRequest req, HttpServletResponse resp) th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebReview">
+<meta property="og:url" content="http://example.com/2024/01/02/WebReview/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第五章 Cookie 和 Session1.蛋糕商城123456789101112131415161718192021222324252627public class PurchaseServlet extends HttpServlet &#123;    public void doGet(HttpServletRequest req, HttpServletResponse resp) th">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-02T15:08:55.000Z">
+<meta property="article:modified_time" content="2024-01-02T15:09:38.825Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2024/01/02/WebReview/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>Hexo</title>
+  <title>WebReview | Hexo</title>
   
 
 
@@ -169,9 +173,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -187,10 +192,9 @@
       <meta itemprop="name" content="Hexo">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/01/02/WebReview/" class="post-title-link" itemprop="url">WebReview</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          WebReview
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -214,7 +218,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="第五章-Cookie-和-Session"><a href="#第五章-Cookie-和-Session" class="headerlink" title="第五章 Cookie 和 Session"></a>第五章 Cookie 和 Session</h1><h2 id="1-蛋糕商城"><a href="#1-蛋糕商城" class="headerlink" title="1.蛋糕商城"></a>1.蛋糕商城</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public class PurchaseServlet extends HttpServlet &#123;</span><br><span class="line">    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;</span><br><span class="line">        String id = (String) req.getAttribute(&quot;id&quot;);</span><br><span class="line">        if(id==null)&#123;</span><br><span class="line">            resp.sendRedirect(&quot;/ListBookServlet&quot;);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Book book = BookDB.getBook(id);</span><br><span class="line">        HttpSession session = req.getSession();</span><br><span class="line">        List&lt;Book&gt;cart = (List)session.getAttribute(&quot;cart&quot;);</span><br><span class="line"></span><br><span class="line">        if(cart == null)&#123;</span><br><span class="line">            cart = new ArrayList&lt;Book&gt;();</span><br><span class="line">            session.setAttribute(&quot;cart&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cart.add(book);</span><br><span class="line"></span><br><span class="line">        Cookie cookie = new Cookie(&quot;JSESSIONID&quot;,session.getID());</span><br><span class="line">        cookie.setMaxAge(60*30);</span><br><span class="line">        cookie.setPath(&quot;/chapter06&quot;);</span><br><span class="line">        resp.addCookie(cookie);</span><br><span class="line"></span><br><span class="line">        resp.sendRedirect(&quot;BookServlet&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <h1 id="第五章-Cookie-和-Session"><a href="#第五章-Cookie-和-Session" class="headerlink" title="第五章 Cookie 和 Session"></a>第五章 Cookie 和 Session</h1><h2 id="1-蛋糕商城"><a href="#1-蛋糕商城" class="headerlink" title="1.蛋糕商城"></a>1.蛋糕商城</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public class PurchaseServlet extends HttpServlet &#123;</span><br><span class="line">    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;</span><br><span class="line">        String id = (String) req.getAttribute(&quot;id&quot;);</span><br><span class="line">        if(id==null)&#123;</span><br><span class="line">            resp.sendRedirect(&quot;/ListBookServlet&quot;);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Book book = BookDB.getBook(id);</span><br><span class="line">        HttpSession session = req.getSession();</span><br><span class="line">        List&lt;Book&gt;cart = (List)session.getAttribute(&quot;cart&quot;);</span><br><span class="line"></span><br><span class="line">        if(cart == null)&#123;</span><br><span class="line">            cart = new ArrayList&lt;Book&gt;();</span><br><span class="line">            session.setAttribute(&quot;cart&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cart.add(book);</span><br><span class="line"></span><br><span class="line">        Cookie cookie = new Cookie(&quot;JSESSIONID&quot;,session.getID());</span><br><span class="line">        cookie.setMaxAge(60*30);</span><br><span class="line">        cookie.setPath(&quot;/chapter06&quot;);</span><br><span class="line">        resp.addCookie(cookie);</span><br><span class="line"></span><br><span class="line">        resp.sendRedirect(&quot;BookServlet&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 
@@ -254,256 +258,30 @@
 <h2 id="3-JDBCUtils"><a href="#3-JDBCUtils" class="headerlink" title="3.JDBCUtils"></a>3.JDBCUtils</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">package Utils;</span><br><span class="line"></span><br><span class="line">import java.sql.*;</span><br><span class="line"></span><br><span class="line">public class JDBCUtils &#123;</span><br><span class="line">    public static Connection getConnection() throws SQLException,ClassNotFoundException&#123;</span><br><span class="line">        Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</span><br><span class="line">        String url = &quot;jdbc:mysql://127.0.0.1:3306/bloguser?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf8&quot;;</span><br><span class="line">        String username = &quot;root&quot;;</span><br><span class="line">        String password = &quot;skyang9&quot;;</span><br><span class="line"></span><br><span class="line">        Connection conn = DriverManager.getConnection(url,username,password);</span><br><span class="line">        return conn;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void release(PreparedStatement stmt , Connection conn)&#123;</span><br><span class="line">        if(stmt != null)&#123;</span><br><span class="line">            try&#123;</span><br><span class="line">                stmt.close();</span><br><span class="line">            &#125;catch(SQLException e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if(conn != null)&#123;</span><br><span class="line">            try&#123;</span><br><span class="line">                conn.close();</span><br><span class="line">            &#125;catch(SQLException e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void release(ResultSet rs , PreparedStatement stmt , Connection conn)&#123;</span><br><span class="line">        if(rs != null)&#123;</span><br><span class="line">            try&#123;</span><br><span class="line">                rs.close();</span><br><span class="line">            &#125;catch(SQLException e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        release(stmt,conn);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/14/my-new-post/">
+        
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/12/14/my-new-post/" class="post-title-link" itemprop="url">操作系统</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-12-14 17:51:11" itemprop="dateCreated datePublished" datetime="2023-12-14T17:51:11+08:00">2023-12-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-16 11:26:59" itemprop="dateModified" datetime="2023-12-16T11:26:59+08:00">2023-12-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">期末复习</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="这是一个测试文档"><a href="#这是一个测试文档" class="headerlink" title="这是一个测试文档"></a>这是一个测试文档</h1><p><strong>202<strong><strong>3</strong></strong>操作系统<strong><strong>E</strong></strong>复习大纲（适用于<strong><strong>计算机信安</strong></strong>21****级）</strong></p>
-<p><strong>1．</strong> <em><strong>*操作系统的定义*</strong></em></p>
-<p>​	<em><strong>*操作系统是覆盖在硬件上的第一层软件，他负责管理计算机的硬件和软件资源，并向用户提供良好的界面。*</strong></em></p>
-<p>2． 操作系统的基本类型及特征</p>
-<p>(1) 单道批处理系统：资源得不到充分利用。</p>
-<p>(2) 多道批处理系统：资源利用率高，系统吞吐量大，平均周转时间长，无交互能力。</p>
-<p>(3) 分时系统：多路性，独立性，及时性，交互性。</p>
-<p>(4) 实时系统：及时性 和 高可靠性</p>
-<p>(5) 微机操作系统：单用户单任务（DOS），单用户多任务（Windows），多用户多任务（Unix，Linux）。</p>
-<p><strong>3．</strong> <em><strong>*操作系统的功能及特征*</strong></em></p>
-<p><strong>(1)</strong> <em><strong>*操作系统是用户和计算机硬件系统之间的接口。*</strong></em></p>
-<p><strong>(2)</strong> <em><strong>*操作系统为计算机系统资源的管理者*</strong></em></p>
-<p><strong>(3)</strong> <em><strong>*操作系统实现了对系统资源的抽象*</strong></em></p>
-<p><strong>(4)</strong> <em><strong>*方便性、有效性、可扩充性、开放性。*</strong></em></p>
-<p>4． 进程的定义、特征</p>
-<p>​	定义：进程是一段可并发执行的具有独立功能的程序，是关于某个数据集的一次执行过程，也是OS进行资源分配和保护的基本单位。</p>
-<p>​	特征：动态性，并发性，独立性，异步性。</p>
-<p>5． 进程基本状态及其转换原因</p>
-<p>​	就绪状态，执行状态，阻塞状态。</p>
-<p>6． 进程互斥、同步</p>
-<p>(1) 在多道程序环境下，进程是并发进行的，不同进程之间存在着不同的相互制约关系，为了协调进程之间的相互关系，引入了进程同步的概念。</p>
-<p>(2) 对临界资源的访问，需要互斥地进行，即一个时间段内只允许一个进程访问该资源。</p>
-<p>(3) 互斥是同步的一个特例，同步强调的是保证这些进程之间的操作的先后次序的约束，而互斥强调的是对共享资源的互斥访问。</p>
-<p>7． 进程控制块的内容、作用</p>
-<p>​	内容：进程标识符 + 处理机状态 + 进程调度信息 + 进程控制信息</p>
-<p>​	作用：作为独立运行基本单位的标志（系统是通过PCB来感知进程的存在的）；实现间接性运行方式；提供进程管理所需要的信息；提供继承调度所需要的信息；实现与其他进程之间的同步与通信。</p>
-<p>​	</p>
-<p>8． 死锁的原因、必要条件</p>
-<p>​	定义：死锁是指多个进程在运行过程中因争夺资源而造成的一种僵局，当进程处于这种僵持状态时，若无外力作用，他们都将无法向前推进。</p>
-<p>​	原因：抢占不可抢占性资源，竞争可消耗资源，进程间推进顺序不当。</p>
-<p>​	必要条件：互斥条件，请求和保持条件，不可抢占条件，循环等待条件。</p>
-<p>9． 连续分配原理和特点 </p>
-<p>​	一个用户程序分配一个连续的内存空间，即程序中代码或数据的逻辑地址相邻，体现在内存空间中为分配的物理地址相邻。</p>
-<p>(1) 单一连续分配：适用于单用户单任务</p>
-<p>(2) 固定分区分配：</p>
-<p>(3) 动态分区分配：</p>
-<p>① 数据结构：空闲分区表 ， 空闲分区链</p>
-<p>② 分配算法：</p>
-<p>\1) 首次适应算法：有外部碎片，每次从低地址开始查找，增加查找的时间开销。</p>
-<p>\2) 循环首次适应算法：让内存中空闲分区分布的更均匀，减少查找空闲分区的时间开销，但使大的空闲分区比较缺乏。</p>
-<p>\3) 最佳适应算法：会留下很多外部碎片</p>
-<p>\4) 最坏适应算法：可使剩下的空闲分区不至于太小，产生碎片的概率最小，对中小作业有利，同时查找效率高。</p>
-<p>\5) 快速适应算法，伙伴系统，哈希系统。</p>
-<p>③ 回收操作。</p>
-<p>(4) 动态重定位分区分配：与动态分区分配基本相同，但增加了紧凑功能。</p>
-<p>10． 页式、段式存储管理原理</p>
-<p>11． 分页、分段存储管理的地址转换过程</p>
-<p>12． 虚拟存储器概念、理论基础</p>
-<p>(1) 概念：虚拟存储器，是指具有请求调入和置换功能，能从逻辑上对内存容量加以扩充的一种存储器系统。</p>
-<p>(2) 逻辑容量：内存容量+外存容量</p>
-<p>(3) 最大容量：取决于计算机系统的地质结构</p>
-<p>(4) 理论基础：局部性原理</p>
-<p>① 程序在执行时，除了少部分的转移和过程调用指令外，在大多数情况下是顺序执行的。</p>
-<p>② 过程调用将会使程序的执行轨迹由一部分区域转移至另一部分区域。</p>
-<p>③ 程序中存在许多循环结构，这些结构虽然只有少数指令构成，但是他们将会被多次执行。</p>
-<p>④ 程序中还包括许多对数据结构的处理，如对数组进行操作，他们往往都局限于很小的范围内。</p>
-<p>13． 页面置换算法-先进先出页面置换算法、最佳页面置换算法、LRU</p>
-<p>14． 存储管理的碎片问题</p>
-<p>(1) 按需分配没有内部碎片：动态分区分配，分段存储管理。</p>
-<p>(2) 固定分配没有外部碎片：固定分区分配，分页存储管理。</p>
-<p>15． 设备分配时应考虑的因素</p>
-<p>(1) 设备的固有属性</p>
-<p>(2) 设备分配算法</p>
-<p>(3) 设备分配时的安全性</p>
-<p>(4) 设备独立性</p>
-<p>16． 设备独立性、虚拟设备</p>
-<p>(1) 设备独立性：设备独立性是指操作系统把所有外部设备统一当做文件来看待，只要安装他们的驱动程序，任何用户都可以像使用文件那样，操作、使用这些设备，而不必知道他们的具体存在形式。</p>
-<p>(2) 虚拟设备：通过虚拟技术，将一台独占设备虚拟成多台逻辑设备，供多个进程同时使用。</p>
-<p>(3) 物理设备是实际存在的，逻辑设备是依靠物理设备存在的。在应用程序中，用来请求I&#x2F;O服务而使用的是逻辑设备，系统在实际执行时使用的是物理设备，系统为了实现从逻辑设备到物理设备的映射，设置了一张逻辑设备表。每个表目包括逻辑设备名、物理设备名、设备驱动程序入口。这样做实现了设备独立性，带来两个好处：使设备分配时具有灵活性和易于实现I&#x2F;O重定向。</p>
-<p>17． 磁盘的调度算法</p>
-<p>(1) FCFS：先进先出</p>
-<p>(2) SSTF：距离最近优先</p>
-<p>(3) SCAN：无更外的磁道需要访问时，磁头便会返回。</p>
-<p>(4) CSCAN：移动到最外的磁道并完成访问后，磁头才返回。</p>
-<p>18． 文件的物理结构（顺序结构、链接结构（隐式、显式）、索引结构（单级、多级、增量式））</p>
-<p>19． UNIX系统多级混合（增量式）索引结构</p>
-<p>20． 文件存储空间的管理方法-空闲表法、位示图、空闲块链法</p>
-<p>21． 系统调用的过程</p>
-<p>​	首先运行于用户态的应用程序发出系统调用请求，保护现场。一般都是给出一个中断指令（软中断），然后根据中断向量表查找系统调用表，最后在核心态执行系统调用处理程序（中断程序），最后返回应用程序，恢复现场。</p>
-<p>22． 系统调用与一般过程调用的区别、</p>
-<p>(1) 系统调用（程序）在内核态执行，调用它们时需要一个类似于硬件中断处理机制的中断处理机制考体统系统服务。</p>
-<p>(2) 一般</p>
-<p><strong>《操作系统<strong><strong>E</strong></strong>》试卷题型</strong></p>
-<p>一、选择题（每题2分，共40分）</p>
-<p>二、判断题(每题1分，共10分)</p>
-<p>三、简答题(每题5分，共20分)</p>
-<p>四、应用题（每题10分，共30分）</p>
-<p>​	</p>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/12/14/my-new-post/" rel="prev" title="操作系统">
+      <i class="fa fa-chevron-left"></i> 操作系统
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/14/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/12/14/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-12-14 15:40:53" itemprop="dateCreated datePublished" datetime="2023-12-14T15:40:53+08:00">2023-12-14</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
@@ -556,6 +334,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-Cookie-%E5%92%8C-Session"><span class="nav-number">1.</span> <span class="nav-text">第五章 Cookie 和 Session</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%9B%8B%E7%B3%95%E5%95%86%E5%9F%8E"><span class="nav-number">1.1.</span> <span class="nav-text">1.蛋糕商城</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%98%BE%E7%A4%BA%E4%B8%8A%E6%AC%A1%E8%AE%BF%E9%97%AE%E6%97%B6%E9%97%B4"><span class="nav-number">1.2.</span> <span class="nav-text">2.显示上次访问时间</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-JSP"><span class="nav-number">2.</span> <span class="nav-text">第六章 JSP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%98%BE%E7%A4%BA%E6%97%B6%E9%97%B4"><span class="nav-number">2.1.</span> <span class="nav-text">1.显示时间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#time-jsp"><span class="nav-number">2.1.1.</span> <span class="nav-text">time.jsp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#time-main-jsp"><span class="nav-number">2.1.2.</span> <span class="nav-text">time_main.jsp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%86%99%E4%B8%A4%E4%B8%AAjsp%EF%BC%8C%E8%A6%81%E6%B1%82%E6%98%BE%E7%A4%BAb%EF%BC%8C%E7%AD%89%E5%BE%855s%E6%98%BE%E7%A4%BAa"><span class="nav-number">2.2.</span> <span class="nav-text">2.写两个jsp，要求显示b，等待5s显示a</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-jsp"><span class="nav-number">2.2.1.</span> <span class="nav-text">a.jsp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-jsp"><span class="nav-number">2.2.2.</span> <span class="nav-text">b.jsp</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%85%AB%E7%AB%A0"><span class="nav-number">3.</span> <span class="nav-text">第八章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UserBean"><span class="nav-number">3.0.1.</span> <span class="nav-text">UserBean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#add-jsp"><span class="nav-number">3.0.2.</span> <span class="nav-text">add.jsp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#info-jsp"><span class="nav-number">3.0.3.</span> <span class="nav-text">info.jsp</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E7%AB%A0"><span class="nav-number">4.</span> <span class="nav-text">第十章</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4"><span class="nav-number">4.1.</span> <span class="nav-text">1.基本步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-PrepareStatement"><span class="nav-number">4.2.</span> <span class="nav-text">2.PrepareStatement</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-JDBCUtils"><span class="nav-number">4.3.</span> <span class="nav-text">3.JDBCUtils</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
