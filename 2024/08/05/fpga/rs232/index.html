@@ -19,23 +19,34 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
+    <meta name="description" content="理论学习通信协议基础​		通用异步收发传输器（Universal Asynchronous Receiver&#x2F;Transmitter），通常称作UART。UART是一种通用的数据通信协议，也是异步串行通信口（串口）的总称，它在发送数据时将并行数据转换成串行数据来传输，在接收数据时将接收到的串行数据转换成并行数据。它包括了RS 232、RS499、RS423、RS422和RS485等接口标">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rs232">
+<meta property="og:url" content="http://example.com/2024/08/05/fpga/rs232/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="理论学习通信协议基础​		通用异步收发传输器（Universal Asynchronous Receiver&#x2F;Transmitter），通常称作UART。UART是一种通用的数据通信协议，也是异步串行通信口（串口）的总称，它在发送数据时将并行数据转换成串行数据来传输，在接收数据时将接收到的串行数据转换成并行数据。它包括了RS 232、RS499、RS423、RS422和RS485等接口标">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://doc.embedfire.com/fpga/altera/ep4ce10_pro/zh/latest/_images/RS232002.png">
+<meta property="og:image" content="https://doc.embedfire.com/fpga/altera/ep4ce10_pro/zh/latest/_images/RS232005.png">
+<meta property="og:image" content="https://doc.embedfire.com/fpga/altera/ep4ce10_pro/zh/latest/_images/RS232007.png">
+<meta property="og:image" content="https://doc.embedfire.com/fpga/altera/ep4ce10_pro/zh/latest/_images/RS232008.png">
+<meta property="article:published_time" content="2024-08-05T14:43:13.000Z">
+<meta property="article:modified_time" content="2024-08-06T11:30:43.140Z">
 <meta property="article:author" content="skyang">
+<meta property="article:tag" content="fpga">
+<meta property="article:tag" content="rs232">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://doc.embedfire.com/fpga/altera/ep4ce10_pro/zh/latest/_images/RS232002.png">
 
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2024/08/05/fpga/rs232/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/08/05/fpga/rs232/","path":"2024/08/05/fpga/rs232/","title":"rs232"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Hexo</title>
+<title>rs232 | Hexo</title>
   
 
 
@@ -68,7 +79,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Hexo</h1>
+      <p class="site-title">Hexo</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -121,7 +132,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -134,6 +145,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">理论学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E5%9F%BA%E7%A1%80"><span class="nav-number">1.1.</span> <span class="nav-text">通信协议基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UART%E5%9F%BA%E7%A1%80"><span class="nav-number">1.2.</span> <span class="nav-text">UART基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RS232%E4%BC%98%E7%82%B9"><span class="nav-number">1.3.</span> <span class="nav-text">RS232优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RS232%E4%BF%A1%E5%8F%B7%E7%BA%BF"><span class="nav-number">1.4.</span> <span class="nav-text">RS232信号线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RS232%E5%8D%8F%E8%AE%AE%E5%9F%BA%E7%A1%80"><span class="nav-number">1.5.</span> <span class="nav-text">RS232协议基础</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98"><span class="nav-number">2.</span> <span class="nav-text">项目实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RS232-%E6%8E%A5%E6%94%B6%E7%AB%AF%E6%A8%A1%E5%9D%97"><span class="nav-number">2.1.</span> <span class="nav-text">RS232 接收端模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RS232%E5%8F%91%E9%80%81%E7%AB%AF%E6%A8%A1%E5%9D%97"><span class="nav-number">2.2.</span> <span class="nav-text">RS232发送端模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E9%93%BE%E6%8E%A5"><span class="nav-number">3.</span> <span class="nav-text">学习链接</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -173,16 +185,17 @@
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/08/05/fpga/rs232/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -196,13 +209,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="name" content="rs232 | Hexo">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/08/05/fpga/rs232/" class="post-title-link" itemprop="url">rs232</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          rs232
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -244,8 +257,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="理论学习"><a href="#理论学习" class="headerlink" title="理论学习"></a>理论学习</h2><h3 id="通信协议基础"><a href="#通信协议基础" class="headerlink" title="通信协议基础"></a>通信协议基础</h3><p>​		通用异步收发传输器（Universal Asynchronous Receiver&#x2F;Transmitter），通常称作UART。UART是一种通用的数据通信协议，也是异步串行通信口（串口）的总称，它在发送数据时将并行数据转换成串行数据来传输，在接收数据时将接收到的串行数据转换成并行数据。它包括了RS 232、RS499、RS423、RS422和RS485等接口标准规范和总线标准规范。</p>
+    <div class="post-body" itemprop="articleBody"><h2 id="理论学习"><a href="#理论学习" class="headerlink" title="理论学习"></a>理论学习</h2><h3 id="通信协议基础"><a href="#通信协议基础" class="headerlink" title="通信协议基础"></a>通信协议基础</h3><p>​		通用异步收发传输器（Universal Asynchronous Receiver&#x2F;Transmitter），通常称作UART。UART是一种通用的数据通信协议，也是异步串行通信口（串口）的总称，它在发送数据时将并行数据转换成串行数据来传输，在接收数据时将接收到的串行数据转换成并行数据。它包括了RS 232、RS499、RS423、RS422和RS485等接口标准规范和总线标准规范。</p>
 <p>​		串口作为常用的三大低速总线（UART、SPI、IIC）之一，在设计众多通信接口和调试时占有重要地位。但UART和SPI、IIC不同的是，它是异步通信接口，异步通信中的接收方并不知道数据什么时候会到达，所以双方收发端都要有各自的时钟，在数据传输过程中是不需要时钟的，发送方发送的时间间隔可以不均匀，接受 方是在数据的起始位和停止位的帮助下实现信息同步的。而SPI、IIC是同步通信接口（后面的章节会做详细介绍），同步通信中双方使用频率一致的时钟，在数据传输过程中时钟伴随着数据一起传输，发送方和接收方使用的时钟都是由主机提供的。</p>
 <h3 id="UART基础"><a href="#UART基础" class="headerlink" title="UART基础"></a>UART基础</h3><p>​		UART通信只有两根信号线，一根是发送数据端口线叫tx（Transmitter），一根是接收数据端口线叫rx（Receiver），对于PC来说它的tx要和对于FPGA来说的rx连接，同样PC的rx要和FPGA的tx连接。UART可以实现全双工，即可以同时进行发送数据和接收数据。</p>
 <p><img src="https://doc.embedfire.com/fpga/altera/ep4ce10_pro/zh/latest/_images/RS232002.png" alt="RS232002"></p>
@@ -348,7 +360,6 @@
 <li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wanghuaijun/p/15159261.html"><strong>详解 | 还不懂串口通信？看这篇！</strong></a></li>
 </ol>
 
-      
     </div>
 
     
@@ -356,207 +367,26 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
+          <div class="post-tags">
+              <a href="/tags/fpga/" rel="tag"># fpga</a>
+              <a href="/tags/rs232/" rel="tag"># rs232</a>
+          </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/08/03/Git/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="skyang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/08/03/Git/" class="post-title-link" itemprop="url">Git基础</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-08-03 22:04:53" itemprop="dateCreated datePublished" datetime="2024-08-03T22:04:53+08:00">2024-08-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-08-04 21:27:47" itemprop="dateModified" datetime="2024-08-04T21:27:47+08:00">2024-08-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机基础</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="一-git基础"><a href="#一-git基础" class="headerlink" title="一.git基础"></a>一.git基础</h2><ol>
-<li><p>初始化git仓库</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/08/03/Git/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/08/03/Git/" rel="prev" title="Git基础">
+                  <i class="fa fa-angle-left"></i> Git基础
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
     </footer>
   </article>
 </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/14/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="skyang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/12/14/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-12-14 15:40:53" itemprop="dateCreated datePublished" datetime="2023-12-14T15:40:53+08:00">2023-12-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-08-03 22:46:21" itemprop="dateModified" datetime="2024-08-03T22:46:21+08:00">2024-08-03</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Clean-buffer"><a href="#Clean-buffer" class="headerlink" title="Clean buffer"></a>Clean buffer</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure>
-
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<h2 id="skyang"><a href="#skyang" class="headerlink" title="skyang"></a>skyang</h2><h3 id="1-清除缓存可以帮助你重置主题，删除多余标签"><a href="#1-清除缓存可以帮助你重置主题，删除多余标签" class="headerlink" title="1.清除缓存可以帮助你重置主题，删除多余标签"></a>1.清除缓存可以帮助你重置主题，删除多余标签</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-快速生成并部署"><a href="#2-快速生成并部署" class="headerlink" title="2.快速生成并部署"></a>2.快速生成并部署</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g -d</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-书写markdown文档时题头用例"><a href="#3-书写markdown文档时题头用例" class="headerlink" title="3. 书写markdown文档时题头用例"></a>3. 书写markdown文档时题头用例</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: Git基础</span><br><span class="line">date: <span class="number">2024</span><span class="number">-08</span><span class="number">-03</span> <span class="number">22</span>:<span class="number">04</span>:<span class="number">53</span></span><br><span class="line">tags: </span><br><span class="line">  - git</span><br><span class="line">  - linux</span><br><span class="line">categories: </span><br><span class="line">  - 计算机基础</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">摘要内容 ......</span><br><span class="line"></span><br><span class="line">&lt;!--more--&gt;</span><br><span class="line">&lt;!--more--&gt;</span><br><span class="line">      </span><br><span class="line">正文内容 ......</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
 
 
