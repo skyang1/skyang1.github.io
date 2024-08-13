@@ -146,7 +146,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -724,6 +724,99 @@
     <div class="post-body" itemprop="articleBody">
           <h1 id="Sublime快捷键"><a href="#Sublime快捷键" class="headerlink" title="Sublime快捷键"></a>Sublime快捷键</h1><h2 id="查找替换"><a href="#查找替换" class="headerlink" title="查找替换"></a>查找替换</h2><p>查找 ： Ctrl + F</p>
 <p>查找替换 ：Ctrl + H</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/08/03/EDA/6%E9%B9%8F%E5%9F%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="skyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/08/03/EDA/6%E9%B9%8F%E5%9F%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4/" class="post-title-link" itemprop="url">Toward Controllable Hierarchical Clock Tree Synthesis with Skew-Latency-Load Tree</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-08-03 22:04:53" itemprop="dateCreated datePublished" datetime="2024-08-03T22:04:53+08:00">2024-08-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-08-13 21:19:17" itemprop="dateModified" datetime="2024-08-13T21:19:17+08:00">2024-08-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/EDA/" itemprop="url" rel="index"><span itemprop="name">EDA</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1-SKEW-LATENCY-LOAD-TREE-CONSTRUCTION"><a href="#1-SKEW-LATENCY-LOAD-TREE-CONSTRUCTION" class="headerlink" title="1.SKEW-LATENCY-LOAD TREE CONSTRUCTION"></a>1.SKEW-LATENCY-LOAD TREE CONSTRUCTION</h2><p>首先提出了时钟延迟(latency)，时钟漂移(skew)，负载电容与线长的关系。</p>
+<p> $PL(s_i)$denotes the path length from the source to $s_i$of $T$ .</p>
+<p>$\begin{gathered}<br>\text { skew } \propto \max _{s_i \in \mathcal{S}}\left{P L\left(s_i\right)\right}-\min _{s_i \in \mathcal{S}}\left{P L\left(s_i\right)\right}, \<br>\text { latency } \max _{\max } \propto \max _{s_i \in \mathcal{S}}\left{P L\left(s_i\right)\right}, \<br>\text { load } \propto W L(T),<br>\end{gathered}$</p>
+<h3 id="1-1-SLLT"><a href="#1-1-SLLT" class="headerlink" title="1.1 SLLT"></a>1.1 SLLT</h3><p>$\alpha$ 代表浅度，可以反应时钟树系统的延迟(latency)。</p>
+<p>$\alpha&#x3D;\max _{s_i \in \mathcal{S}}\left{\frac{P L\left(s_i\right)}{M D\left(s_i\right)}\right},$ PL为时钟到$s_i$的线长，MD为时钟到$s_i$的曼哈顿距离。</p>
+<p>$\beta$ 代表亮度，可以反应时钟树的负载电容。</p>
+<p>$\beta&#x3D;\frac{W L(T)}{W L(\operatorname{MST}(G))}$ ，WL为树的总线长，MST为最小生成树。</p>
+<p>$\gamma$ 代表偏斜度，可以反应时钟漂移。</p>
+<p>$\gamma&#x3D;\frac{\max _{s_i \in \mathcal{S}}\left{P L\left(s_i\right)\right}}{\overline{P L}} .$</p>
 
       
     </div>

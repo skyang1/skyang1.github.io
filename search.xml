@@ -333,4 +333,25 @@
         <category>计算机基础</category>
       </categories>
   </entry>
+  <entry>
+    <title>Toward Controllable Hierarchical Clock Tree Synthesis with Skew-Latency-Load Tree</title>
+    <url>/2024/08/03/EDA/6%E9%B9%8F%E5%9F%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4/</url>
+    <content><![CDATA[<h2 id="1-SKEW-LATENCY-LOAD-TREE-CONSTRUCTION"><a href="#1-SKEW-LATENCY-LOAD-TREE-CONSTRUCTION" class="headerlink" title="1.SKEW-LATENCY-LOAD TREE CONSTRUCTION"></a>1.SKEW-LATENCY-LOAD TREE CONSTRUCTION</h2><p>首先提出了时钟延迟(latency)，时钟漂移(skew)，负载电容与线长的关系。</p>
+<p> $PL(s_i)$denotes the path length from the source to $s_i$of $T$ .</p>
+<p>$\begin{gathered}<br>\text { skew } \propto \max _{s_i \in \mathcal{S}}\left{P L\left(s_i\right)\right}-\min _{s_i \in \mathcal{S}}\left{P L\left(s_i\right)\right}, \<br>\text { latency } \max _{\max } \propto \max _{s_i \in \mathcal{S}}\left{P L\left(s_i\right)\right}, \<br>\text { load } \propto W L(T),<br>\end{gathered}$</p>
+<h3 id="1-1-SLLT"><a href="#1-1-SLLT" class="headerlink" title="1.1 SLLT"></a>1.1 SLLT</h3><p>$\alpha$ 代表浅度，可以反应时钟树系统的延迟(latency)。</p>
+<p>$\alpha&#x3D;\max _{s_i \in \mathcal{S}}\left{\frac{P L\left(s_i\right)}{M D\left(s_i\right)}\right},$ PL为时钟到$s_i$的线长，MD为时钟到$s_i$的曼哈顿距离。</p>
+<p>$\beta$ 代表亮度，可以反应时钟树的负载电容。</p>
+<p>$\beta&#x3D;\frac{W L(T)}{W L(\operatorname{MST}(G))}$ ，WL为树的总线长，MST为最小生成树。</p>
+<p>$\gamma$ 代表偏斜度，可以反应时钟漂移。</p>
+<p>$\gamma&#x3D;\frac{\max _{s_i \in \mathcal{S}}\left{P L\left(s_i\right)\right}}{\overline{P L}} .$</p>
+]]></content>
+      <categories>
+        <category>EDA</category>
+      </categories>
+      <tags>
+        <tag>EDA</tag>
+        <tag>cluster</tag>
+      </tags>
+  </entry>
 </search>
