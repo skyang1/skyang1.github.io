@@ -19,12 +19,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Register Clustering Methodology for Low Power Clock Tree Synthesis1.概要背景​		一个时钟网络通常消耗整个芯片功率的40%。因此，许多研究者关注根据(1)中提出的参数对时钟网络进行功率优化。 KMR：基于k均值的寄存器聚类算法 KSR：基于k-分裂的寄存器聚类算法 GSR：基于贪婪搜索的寄存器聚类算法 2.算法描述2.1KMR2.">
+    <meta name="description" content="Register Clustering Methodology for Low Power Clock Tree Synthesis 1.概要 背景 ​ 一个时钟网络通常消耗整个芯片功率的40%。因此，许多研究者关注根据(1)中提出的参数对时钟网络进行功率优化。 KMR：基于k均值的寄存器聚类算法 KSR：基于k-分裂的寄存器聚类算法 GSR：基于贪婪搜索的寄存器聚类算法 2.算">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Register Clustering Methodology for Low Power Clock Tree Synthesis">
 <meta property="og:url" content="http://example.com/2024/08/03/EDA/3.Register%20Clustering%20Methodology%20for%20Low%20Power%20Clock%20Tree%20Synthesis/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Register Clustering Methodology for Low Power Clock Tree Synthesis1.概要背景​		一个时钟网络通常消耗整个芯片功率的40%。因此，许多研究者关注根据(1)中提出的参数对时钟网络进行功率优化。 KMR：基于k均值的寄存器聚类算法 KSR：基于k-分裂的寄存器聚类算法 GSR：基于贪婪搜索的寄存器聚类算法 2.算法描述2.1KMR2.">
+<meta property="og:description" content="Register Clustering Methodology for Low Power Clock Tree Synthesis 1.概要 背景 ​ 一个时钟网络通常消耗整个芯片功率的40%。因此，许多研究者关注根据(1)中提出的参数对时钟网络进行功率优化。 KMR：基于k均值的寄存器聚类算法 KSR：基于k-分裂的寄存器聚类算法 GSR：基于贪婪搜索的寄存器聚类算法 2.算">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-08-03T14:04:53.000Z">
 <meta property="article:modified_time" content="2024-08-13T07:23:10.987Z">
@@ -140,7 +140,8 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Register-Clustering-Methodology-for-Low-Power-Clock-Tree-Synthesis"><span class="nav-number">1.</span> <span class="nav-text">Register Clustering Methodology for Low Power Clock Tree Synthesis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A6%82%E8%A6%81"><span class="nav-number">1.1.</span> <span class="nav-text">1.概要</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.1.1.</span> <span class="nav-text">背景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%AE%97%E6%B3%95%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.2.</span> <span class="nav-text">2.算法描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1KMR"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1KMR</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-%E4%BC%AA%E4%B8%AD%E5%BF%83%EF%BC%88%E2%80%9CPseudo-Center%E2%80%9D-%EF%BC%89"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">2.2.1.伪中心（“Pseudo Center” ）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-Algorithm1-Get-center"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">2.2.2.Algorithm1 : Get center</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-%E7%B0%87%E7%9A%84%E4%B8%AA%E6%95%B0"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">2.2.3 簇的个数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-4-%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">2.2.4 算法流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-5-%E5%B0%8F%E7%BB%93"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">2.2.5 小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-KSR"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 KSR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-GSR"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 GSR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-buffer-allocation"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 buffer allocation</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#register-clustering-methodology-for-low-power-clock-tree-synthesis"><span class="nav-number">1.</span> <span class="nav-text">Register
+Clustering Methodology for Low Power Clock Tree Synthesis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%A6%81"><span class="nav-number">1.1.</span> <span class="nav-text">1.概要</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.1.1.</span> <span class="nav-text">背景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.2.</span> <span class="nav-text">2.算法描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kmr"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1KMR</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%AA%E4%B8%AD%E5%BF%83pseudo-center"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">2.2.1.伪中心（“Pseudo Center” ）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#algorithm1-get-center"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">2.2.2.Algorithm1 : Get center</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B0%87%E7%9A%84%E4%B8%AA%E6%95%B0"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">2.2.3 簇的个数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">2.2.4 算法流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">2.2.5 小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ksr"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 KSR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gsr"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 GSR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#buffer-allocation"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 buffer allocation</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -153,7 +154,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -248,21 +249,47 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="Register-Clustering-Methodology-for-Low-Power-Clock-Tree-Synthesis"><a href="#Register-Clustering-Methodology-for-Low-Power-Clock-Tree-Synthesis" class="headerlink" title="Register Clustering Methodology for Low Power Clock Tree Synthesis"></a><strong>Register Clustering Methodology for Low Power Clock Tree Synthesis</strong></h1><h2 id="1-概要"><a href="#1-概要" class="headerlink" title="1.概要"></a>1.概要</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>​		一个时钟网络通常消耗整个芯片功率的40%。因此，许多研究者关注根据(1)中提出的参数对时钟网络进行功率优化。</p>
+    <div class="post-body" itemprop="articleBody"><h1
+id="register-clustering-methodology-for-low-power-clock-tree-synthesis"><strong>Register
+Clustering Methodology for Low Power Clock Tree Synthesis</strong></h1>
+<h2 id="概要">1.概要</h2>
+<h3 id="背景">背景</h3>
+<p>​
+一个时钟网络通常消耗整个芯片功率的40%。因此，许多研究者关注根据(1)中提出的参数对时钟网络进行功率优化。</p>
 <p>KMR：基于k均值的寄存器聚类算法</p>
 <p>KSR：基于k-分裂的寄存器聚类算法</p>
 <p>GSR：基于贪婪搜索的寄存器聚类算法</p>
-<h2 id="2-算法描述"><a href="#2-算法描述" class="headerlink" title="2.算法描述"></a>2.算法描述</h2><h3 id="2-1KMR"><a href="#2-1KMR" class="headerlink" title="2.1KMR"></a>2.1KMR</h3><h4 id="2-2-1-伪中心（“Pseudo-Center”-）"><a href="#2-2-1-伪中心（“Pseudo-Center”-）" class="headerlink" title="2.2.1.伪中心（“Pseudo Center” ）"></a>2.2.1.伪中心（“Pseudo Center” ）</h4><p>​		“伪中心”技术不仅避免了寄存器聚类算法的失败，而且还破坏了可能违反约束条件的大型聚类（包括旋转、最大扇出、最大负载电容等）。</p>
-<h4 id="2-2-2-Algorithm1-Get-center"><a href="#2-2-2-Algorithm1-Get-center" class="headerlink" title="2.2.2.Algorithm1 : Get center"></a>2.2.2.Algorithm1 : Get center</h4><p>​	如果一个集合 $C$ 是空集，那么他的中心点为最大集合的一半的点的几何中心；否则，则为该集合所有点的集合中心。</p>
-<h4 id="2-2-3-簇的个数"><a href="#2-2-3-簇的个数" class="headerlink" title="2.2.3 簇的个数"></a>2.2.3 簇的个数</h4><p>​		相比K-Means算法，KMR算法根据以下公式确定簇的个数。</p>
-<p>​		$ K &#x3D; \alpha \times \lceil Total_r &#x2F; Max_f \rceil$</p>
-<p>​		$Total_r$ 表示寄存器总数，$Max_f$表示缓冲器最大扇出，$\alpha$ 为用户自定义参数，通常大于1。</p>
-<h4 id="2-2-4-算法流程"><a href="#2-2-4-算法流程" class="headerlink" title="2.2.4 算法流程"></a>2.2.4 算法流程</h4><p>​		首先计算出簇的个数$K$，初始化$K$个簇的中心点，开始迭代。每次迭代先将所有簇清空，然后计算出每个点到每个簇的距离，将其分配到离他最近的簇中；全部分配完之后，重新计算簇的中心点，开始下一轮迭代，直到总线长不再减少为止。</p>
-<h4 id="2-2-5-小结"><a href="#2-2-5-小结" class="headerlink" title="2.2.5 小结"></a>2.2.5 小结</h4><p>​		白看半天，其实跟K-Means算法一样，只是多了一个计算K的方法。</p>
-<h3 id="2-2-KSR"><a href="#2-2-KSR" class="headerlink" title="2.2 KSR"></a>2.2 KSR</h3><p>​		KMR没有考虑寄存器的分布，选择一个不合适的$K$，结果会很糟。</p>
-<p>​		首先选取最小生成树方法生成一个初始聚类，然后再使用MSR方法迭代优化。</p>
-<h3 id="2-3-GSR"><a href="#2-3-GSR" class="headerlink" title="2.3 GSR"></a>2.3 GSR</h3><p>​		从1~n遍历所有寄存器，如果可以找到满足条件的中心，则将该寄存器插入到这个簇中，否则，将该寄存器设置为一个新的簇中心。</p>
-<h3 id="2-4-buffer-allocation"><a href="#2-4-buffer-allocation" class="headerlink" title="2.4 buffer allocation"></a>2.4 buffer allocation</h3><p>​		buffer放置于每个簇的中心，但需要考虑中心点放buffer是否会与寄存器重叠问题，需要将buffer向上下左右移动微调。</p>
+<h2 id="算法描述">2.算法描述</h2>
+<h3 id="kmr">2.1KMR</h3>
+<h4 id="伪中心pseudo-center">2.2.1.伪中心（“Pseudo Center” ）</h4>
+<p>​
+“伪中心”技术不仅避免了寄存器聚类算法的失败，而且还破坏了可能违反约束条件的大型聚类（包括旋转、最大扇出、最大负载电容等）。</p>
+<h4 id="algorithm1-get-center">2.2.2.Algorithm1 : Get center</h4>
+<p>​ 如果一个集合 <span class="math inline">\(C\)</span>
+是空集，那么他的中心点为最大集合的一半的点的几何中心；否则，则为该集合所有点的集合中心。</p>
+<h4 id="簇的个数">2.2.3 簇的个数</h4>
+<p>​ 相比K-Means算法，KMR算法根据以下公式确定簇的个数。</p>
+<p>​ $ K = Total_r / Max_f $</p>
+<p>​ <span class="math inline">\(Total_r\)</span> 表示寄存器总数，<span
+class="math inline">\(Max_f\)</span>表示缓冲器最大扇出，<span
+class="math inline">\(\alpha\)</span> 为用户自定义参数，通常大于1。</p>
+<h4 id="算法流程">2.2.4 算法流程</h4>
+<p>​ 首先计算出簇的个数<span
+class="math inline">\(K\)</span>，初始化<span
+class="math inline">\(K\)</span>个簇的中心点，开始迭代。每次迭代先将所有簇清空，然后计算出每个点到每个簇的距离，将其分配到离他最近的簇中；全部分配完之后，重新计算簇的中心点，开始下一轮迭代，直到总线长不再减少为止。</p>
+<h4 id="小结">2.2.5 小结</h4>
+<p>​ 白看半天，其实跟K-Means算法一样，只是多了一个计算K的方法。</p>
+<h3 id="ksr">2.2 KSR</h3>
+<p>​ KMR没有考虑寄存器的分布，选择一个不合适的<span
+class="math inline">\(K\)</span>，结果会很糟。</p>
+<p>​
+首先选取最小生成树方法生成一个初始聚类，然后再使用MSR方法迭代优化。</p>
+<h3 id="gsr">2.3 GSR</h3>
+<p>​
+从1~n遍历所有寄存器，如果可以找到满足条件的中心，则将该寄存器插入到这个簇中，否则，将该寄存器设置为一个新的簇中心。</p>
+<h3 id="buffer-allocation">2.4 buffer allocation</h3>
+<p>​
+buffer放置于每个簇的中心，但需要考虑中心点放buffer是否会与寄存器重叠问题，需要将buffer向上下左右移动微调。</p>
 
     </div>
 
@@ -280,13 +307,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2024/08/03/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/Git/" rel="prev" title="Git基础">
-                  <i class="fa fa-angle-left"></i> Git基础
+                <a href="/2024/08/03/EDA/6%E9%B9%8F%E5%9F%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4/" rel="prev" title="Toward Controllable Hierarchical Clock Tree Synthesis with Skew-Latency-Load Tree">
+                  <i class="fa fa-angle-left"></i> Toward Controllable Hierarchical Clock Tree Synthesis with Skew-Latency-Load Tree
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2024/08/05/fpga/rs485/" rel="next" title="rs485">
-                  rs485 <i class="fa fa-angle-right"></i>
+                <a href="/2024/08/05/fpga/uart_lcd/" rel="next" title="基于rs232的lcd图像显示">
+                  基于rs232的lcd图像显示 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
@@ -357,6 +384,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 
