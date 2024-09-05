@@ -39,6 +39,183 @@ id="清除缓存可以帮助你重置主题删除多余标签">1.清除缓存可
 ]]></content>
   </entry>
   <entry>
+    <title>Register Clustering Methodology for Low Power Clock Tree Synthesis</title>
+    <url>/2024/08/03/EDA/3.Register%20Clustering%20Methodology%20for%20Low%20Power%20Clock%20Tree%20Synthesis/</url>
+    <content><![CDATA[<h1
+id="register-clustering-methodology-for-low-power-clock-tree-synthesis"><strong>Register
+Clustering Methodology for Low Power Clock Tree Synthesis</strong></h1>
+<h2 id="概要">1.概要</h2>
+<h3 id="背景">背景</h3>
+<p>​
+一个时钟网络通常消耗整个芯片功率的40%。因此，许多研究者关注根据(1)中提出的参数对时钟网络进行功率优化。</p>
+<p>KMR：基于k均值的寄存器聚类算法</p>
+<p>KSR：基于k-分裂的寄存器聚类算法</p>
+<p>GSR：基于贪婪搜索的寄存器聚类算法</p>
+<span id="more"></span>
+<h2 id="算法描述">2.算法描述</h2>
+<h3 id="kmr">2.1KMR</h3>
+<h4 id="伪中心pseudo-center">2.2.1.伪中心（“Pseudo Center” ）</h4>
+<p>​
+“伪中心”技术不仅避免了寄存器聚类算法的失败，而且还破坏了可能违反约束条件的大型聚类（包括旋转、最大扇出、最大负载电容等）。</p>
+<h4 id="algorithm1-get-center">2.2.2.Algorithm1 : Get center</h4>
+<p>​ 如果一个集合 <span class="math inline">\(C\)</span>
+是空集，那么他的中心点为最大集合的一半的点的几何中心；否则，则为该集合所有点的集合中心。</p>
+<h4 id="簇的个数">2.2.3 簇的个数</h4>
+<p>​ 相比K-Means算法，KMR算法根据以下公式确定簇的个数。</p>
+<p>​ $ K = Total_r / Max_f $</p>
+<p>​ <span class="math inline">\(Total_r\)</span> 表示寄存器总数，<span
+class="math inline">\(Max_f\)</span>表示缓冲器最大扇出，<span
+class="math inline">\(\alpha\)</span> 为用户自定义参数，通常大于1。</p>
+<h4 id="算法流程">2.2.4 算法流程</h4>
+<p>​ 首先计算出簇的个数<span
+class="math inline">\(K\)</span>，初始化<span
+class="math inline">\(K\)</span>个簇的中心点，开始迭代。每次迭代先将所有簇清空，然后计算出每个点到每个簇的距离，将其分配到离他最近的簇中；全部分配完之后，重新计算簇的中心点，开始下一轮迭代，直到总线长不再减少为止。</p>
+<h4 id="小结">2.2.5 小结</h4>
+<p>​ 白看半天，其实跟K-Means算法一样，只是多了一个计算K的方法。</p>
+<h3 id="ksr">2.2 KSR</h3>
+<p>​ KMR没有考虑寄存器的分布，选择一个不合适的<span
+class="math inline">\(K\)</span>，结果会很糟。</p>
+<p>​
+首先选取最小生成树方法生成一个初始聚类，然后再使用MSR方法迭代优化。</p>
+<h3 id="gsr">2.3 GSR</h3>
+<p>​
+从1~n遍历所有寄存器，如果可以找到满足条件的中心，则将该寄存器插入到这个簇中，否则，将该寄存器设置为一个新的簇中心。</p>
+<h3 id="buffer-allocation">2.4 buffer allocation</h3>
+<p>​
+buffer放置于每个簇的中心，但需要考虑中心点放buffer是否会与寄存器重叠问题，需要将buffer向上下左右移动微调。</p>
+]]></content>
+      <categories>
+        <category>EDA</category>
+      </categories>
+      <tags>
+        <tag>EDA</tag>
+        <tag>cluster</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Toward Controllable Hierarchical Clock Tree Synthesis with Skew-Latency-Load Tree</title>
+    <url>/2024/08/03/EDA/6%E9%B9%8F%E5%9F%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4/</url>
+    <content><![CDATA[<h2 id="skew-latency-load-tree-construction">1.SKEW-LATENCY-LOAD TREE
+CONSTRUCTION</h2>
+<p>首先提出了时钟延迟(latency)，时钟漂移(skew)，负载电容与线长的关系。</p>
+<p><span class="math inline">\(PL(s_i)\)</span>denotes the path length
+from the source to <span class="math inline">\(s_i\)</span>of <span
+class="math inline">\(T\)</span> .</p>
+<p><span class="math inline">\(\begin{gathered}
+\text { skew } \propto \max _{s_i \in \mathcal{S}}\left\{P
+L\left(s_i\right)\right\}-\min _{s_i \in \mathcal{S}}\left\{P
+L\left(s_i\right)\right\}, \\
+\text { latency } \max _{\max } \propto \max _{s_i \in
+\mathcal{S}}\left\{P L\left(s_i\right)\right\}, \\
+\text { load } \propto W L(T),
+\end{gathered}\)</span></p>
+<span id="more"></span>
+<h3 id="sllt">1.1 SLLT</h3>
+<p><span class="math inline">\(\alpha\)</span>
+代表浅度，可以反应时钟树系统的延迟(latency)。</p>
+<p><span class="math inline">\(\alpha=\max _{s_i \in
+\mathcal{S}}\left\{\frac{P L\left(s_i\right)}{M
+D\left(s_i\right)}\right\},\)</span> PL为时钟到<span
+class="math inline">\(s_i\)</span>的线长，MD为时钟到<span
+class="math inline">\(s_i\)</span>的曼哈顿距离。</p>
+<p><span class="math inline">\(\beta\)</span>
+代表亮度，可以反应时钟树的负载电容。</p>
+<p><span class="math inline">\(\beta=\frac{W L(T)}{W
+L(\operatorname{MST}(G))}\)</span>
+，WL为树的总线长，MST为最小生成树。</p>
+<p><span class="math inline">\(\gamma\)</span>
+代表偏斜度，可以反应时钟漂移。</p>
+<p><span class="math inline">\(\gamma=\frac{\max _{s_i \in
+\mathcal{S}}\left\{P L\left(s_i\right)\right\}}{\overline{P L}}
+.\)</span></p>
+]]></content>
+      <categories>
+        <category>EDA</category>
+      </categories>
+      <tags>
+        <tag>EDA</tag>
+        <tag>cluster</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rs485</title>
+    <url>/2024/08/05/fpga/rs485/</url>
+    <content><![CDATA[<h2 id="理论基础">理论基础</h2>
+<p>RS-485是双向、半双工通信协议，信号采用差分传输方式，允许多个驱动器和接收器挂接在总线上，其中每个驱动器都能够脱离总线。</p>
+<p>RS-232是双向、全双工通信协议，信号采用单端传输方式。</p>
+<span id="more"></span>
+<figure>
+<img
+src="https://doc.embedfire.com/fpga/altera/ep4ce10_pro/zh/latest/_images/RS485002.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>差分传输有更好的抗干扰能力。</p>
+<figure>
+<img
+src="https://doc.embedfire.com/fpga/altera/ep4ce10_pro/zh/latest/_images/RS485003.png"
+alt="RS485003" />
+<figcaption aria-hidden="true">RS485003</figcaption>
+</figure>
+<p>其次，485相对232可以进行长距离的信号传输；使用收发器，对电压敏感（200mv），传输距离（1200m），传输最大速率（10mb/s）。但485只支持半双工。</p>
+]]></content>
+      <categories>
+        <category>fpga</category>
+        <category>通信协议</category>
+      </categories>
+      <tags>
+        <tag>fpga</tag>
+        <tag>rs485</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基于rs232的lcd图像显示</title>
+    <url>/2024/08/05/fpga/uart_lcd/</url>
+    <content><![CDATA[<h2
+id="使用uart_rx模块作为图像接受模块">1.使用uart_rx模块作为图像接受模块</h2>
+<ol type="1">
+<li>波特率的计算</li>
+</ol>
+<p>波特率：每秒钟通过信号传输的码元数称为码元的传输速率</p>
+<p>使用时钟频率 除以 波特率 可以得到传输每个码源所占用的时钟周期数</p>
+<p>$baud_cnt_max = $</p>
+<span id="more"></span>
+<ol start="2" type="1">
+<li>为什么要做打两拍操作</li>
+</ol>
+<p>消除亚稳态，稳定信号。</p>
+<p>在找下降沿时，不能使用<span class="math inline">\(rx\_reg1\)</span>
+和<span class="math inline">\(rx\_reg2\)</span> 求得，因为<span
+class="math inline">\(rx\_reg1\)</span>
+信号不稳定，使用其求得的结果也不稳定，因此将 <span
+class="math inline">\(rx\_reg2\)</span>再打一拍，使用<span
+class="math inline">\(rx\_reg2\)</span> 和 <span
+class="math inline">\(rx\_reg3\)</span> 求得。</p>
+<ol start="3" type="1">
+<li>代码中 <span class="math inline">\(bit\_cnt\)</span> 只计数到8</li>
+</ol>
+<p>这是因为没有计数停止位，所以只有0~8 共计数
+9位（1位起始位+8位数据位）。</p>
+<ol start="4" type="1">
+<li>rs232数据移位方向：</li>
+</ol>
+<p>最先传输的比特在低位，最后传输的比特在高位</p>
+<p>PC机通过串口调试助手往FPGA发8bit数据时，FPGA通过串口线rx一位一位地接收，从最低位到最高位依次接收，最后在FPGA里面位拼接成8比特数据。</p>
+<ol start="5" type="1">
+<li>代码：</li>
+</ol>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> uart_rx</span><br><span class="line">#<span class="keyword">parameter</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">parameter</span> UART_BPS = <span class="number">&#x27;d9600</span>,</span><br><span class="line">			  CLK_FREQ = <span class="number">&#x27;d50_000_000</span></span><br><span class="line">)</span><br><span class="line">(</span><br><span class="line">	<span class="keyword">input</span> sys_clk,sys_rst_n, </span><br><span class="line">	<span class="keyword">input</span> rx, </span><br><span class="line"></span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] po_data,</span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">reg</span> po_flag</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">localparam</span> BAUD_CNT_MAX = CLK_FREQ / UART_BPS;</span><br><span class="line"></span><br><span class="line"><span class="keyword">reg</span> rx_reg1;</span><br><span class="line"><span class="keyword">reg</span> rx_reg2;</span><br><span class="line"><span class="keyword">reg</span> rx_reg3;</span><br><span class="line"><span class="keyword">reg</span> start_nedge;</span><br><span class="line"><span class="keyword">reg</span> work_en;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">12</span>:<span class="number">0</span>] baud_cnt;</span><br><span class="line"><span class="keyword">reg</span> bit_flag;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>] bit_cnt;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] rx_data;</span><br><span class="line"><span class="keyword">reg</span> rx_flag;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		rx_reg1 &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span>  </span><br><span class="line">		rx_reg1 &lt;= rx;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		rx_reg2 &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span>  </span><br><span class="line">		rx_reg2 &lt;= rx_reg1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		rx_reg3 &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span>  </span><br><span class="line">		rx_reg3 &lt;= rx_reg2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		start_nedge &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(rx_reg2 == <span class="number">1&#x27;b0</span> &amp;&amp; rx_reg3 == <span class="number">1&#x27;b1</span>)</span><br><span class="line">		start_nedge &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">	<span class="keyword">else</span>  </span><br><span class="line">		start_nedge &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		work_en &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(start_nedge == <span class="number">1&#x27;b1</span>)	<span class="comment">// 开始工作条件</span></span><br><span class="line">		work_en &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(bit_cnt == <span class="number">4&#x27;d8</span> &amp;&amp; bit_flag == <span class="number">1&#x27;b1</span>)						<span class="comment">// 停止工作条件：完成一个字节的传输</span></span><br><span class="line">		work_en &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		baud_cnt &lt;= <span class="number">13&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(baud_cnt == BAUD_CNT_MAX - <span class="number">1</span> &amp;&amp; work_en == <span class="number">1&#x27;b1</span>)</span><br><span class="line">		baud_cnt &lt;= <span class="number">13&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(work_en == <span class="number">1&#x27;b1</span>)</span><br><span class="line">		baud_cnt &lt;= baud_cnt + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">		baud_cnt &lt;= <span class="number">13&#x27;b0</span>;	<span class="comment">// 传输完成，停止工作，波特计数器清零</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		bit_flag &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(baud_cnt == BAUD_CNT_MAX / <span class="number">2</span> - <span class="number">1</span>)</span><br><span class="line">		bit_flag &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">		bit_flag &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里由于没有计数停止位，所以只对0~8计数</span></span><br><span class="line"><span class="comment">// 传输停止位时已经将work_en拉低，不会使bit_flag有效，因此bit_cnt也不会计数</span></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		bit_cnt &lt;= <span class="number">4&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(bit_cnt == <span class="number">4&#x27;d8</span> &amp;&amp; bit_flag == <span class="number">1&#x27;b1</span>)</span><br><span class="line">		bit_cnt &lt;= <span class="number">4&#x27;d0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(bit_flag == <span class="number">1&#x27;b1</span>)</span><br><span class="line">		bit_cnt &lt;= bit_cnt + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对数据进行移位</span></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		rx_data &lt;= <span class="number">8&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(bit_flag == <span class="number">1&#x27;b1</span> &amp;&amp; bit_cnt &gt;= <span class="number">4&#x27;d1</span> &amp;&amp; bit_cnt &lt;= <span class="number">4&#x27;d8</span>)</span><br><span class="line">		rx_data = &#123;rx_reg3,rx_data[<span class="number">7</span>:<span class="number">1</span>]&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 传输完8比特，拉高rx_flag</span></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		rx_flag &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(bit_cnt == <span class="number">4&#x27;d8</span> &amp;&amp; bit_flag == <span class="number">1&#x27;b1</span>)	<span class="comment">// 8位的最后一个比特传输完成</span></span><br><span class="line">		rx_flag &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">	<span class="keyword">else</span>  </span><br><span class="line">		rx_flag &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// po_data 和 po_flag 都以 rx_data 为基准，可以实现统一时间输出</span></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		po_data &lt;= <span class="number">8&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(rx_flag == <span class="number">1&#x27;b1</span>)</span><br><span class="line">		po_data &lt;= rx_data;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		po_flag &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		po_flag &lt;= rx_flag;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>fpga</category>
+        <category>通信协议</category>
+      </categories>
+      <tags>
+        <tag>fpga</tag>
+        <tag>rs232</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>rs232</title>
     <url>/2024/08/05/fpga/rs232/</url>
     <content><![CDATA[<h2 id="理论学习">理论学习</h2>
@@ -210,180 +387,124 @@ href="https://www.cnblogs.com/wanghuaijun/p/15159261.html"><strong>详解
       </tags>
   </entry>
   <entry>
-    <title>rs485</title>
-    <url>/2024/08/05/fpga/rs485/</url>
-    <content><![CDATA[<h2 id="理论基础">理论基础</h2>
-<p>RS-485是双向、半双工通信协议，信号采用差分传输方式，允许多个驱动器和接收器挂接在总线上，其中每个驱动器都能够脱离总线。</p>
-<p>RS-232是双向、全双工通信协议，信号采用单端传输方式。</p>
-<span id="more"></span>
-<figure>
-<img
-src="https://doc.embedfire.com/fpga/altera/ep4ce10_pro/zh/latest/_images/RS485002.png"
-alt="img" />
-<figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>差分传输有更好的抗干扰能力。</p>
-<figure>
-<img
-src="https://doc.embedfire.com/fpga/altera/ep4ce10_pro/zh/latest/_images/RS485003.png"
-alt="RS485003" />
-<figcaption aria-hidden="true">RS485003</figcaption>
-</figure>
-<p>其次，485相对232可以进行长距离的信号传输；使用收发器，对电压敏感（200mv），传输距离（1200m），传输最大速率（10mb/s）。但485只支持半双工。</p>
+    <title>Sublime快捷键</title>
+    <url>/2024/08/03/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E5%9F%BA%E7%A1%80/sublime%E5%BF%AB%E6%8D%B7%E9%94%AE/</url>
+    <content><![CDATA[<h1 id="sublime快捷键">Sublime快捷键</h1>
+<h2 id="查找替换">查找替换</h2>
+<p>查找 ： Ctrl + F</p>
+<p>查找替换 ：Ctrl + H</p>
 ]]></content>
       <categories>
-        <category>fpga</category>
-        <category>通信协议</category>
+        <category>计算机基础</category>
       </categories>
-      <tags>
-        <tag>fpga</tag>
-        <tag>rs485</tag>
-      </tags>
   </entry>
   <entry>
-    <title>基于rs232的lcd图像显示</title>
-    <url>/2024/08/05/fpga/uart_lcd/</url>
-    <content><![CDATA[<h2
-id="使用uart_rx模块作为图像接受模块">1.使用uart_rx模块作为图像接受模块</h2>
+    <title>单调队列</title>
+    <url>/2024/08/31/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/</url>
+    <content><![CDATA[<h2 id="模拟双端队列">模拟双端队列</h2>
+<p>初始化：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">hh = <span class="number">1</span> , tt = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>入队：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">q[++tt] = i</span><br><span class="line">q[--hh] = i</span><br></pre></td></tr></table></figure>
+<p>出队</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">tt--</span><br><span class="line">hh++</span><br></pre></td></tr></table></figure>
+<p>判断是否队列非空</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(tt&gt;=hh)</span><br></pre></td></tr></table></figure>
+<h2 id="滑动窗口">滑动窗口</h2>
+<p><a href="https://www.luogu.com.cn/problem/P1886">题目描述：</a></p>
+<p>有一个长为 <span class="math inline">\(n\)</span> 的序列 <span
+class="math inline">\(a\)</span>，以及一个大小为 <span
+class="math inline">\(k\)</span>
+的窗口。现在这个从左边开始向右滑动，每次滑动一个单位，求出每次滑动后窗口中的最大值和最小值。</p>
+<p>例如，对于序列 <span
+class="math inline">\([1,3,-1,-3,5,3,6,7]\)</span> 以及 <span
+class="math inline">\(k = 3\)</span>，有如下过程：</p>
+<p><span class="math display">\[\def\arraystretch{1.2}
+\begin{array}{|c|c|c|}\hline
+\textsf{窗口位置} &amp; \textsf{最小值} &amp; \textsf{最大值} \\ \hline
+\verb![1   3  -1] -3   5   3   6   7 ! &amp; -1 &amp; 3 \\ \hline
+\verb! 1  [3  -1  -3]  5   3   6   7 ! &amp; -3 &amp; 3 \\ \hline
+\verb! 1   3 [-1  -3   5]  3   6   7 ! &amp; -3 &amp; 5 \\ \hline
+\verb! 1   3  -1 [-3   5   3]  6   7 ! &amp; -3 &amp; 5 \\ \hline
+\verb! 1   3  -1  -3  [5   3   6]  7 ! &amp; 3 &amp; 6 \\ \hline
+\verb! 1   3  -1  -3   5  [3   6   7]! &amp; 3 &amp; 7 \\ \hline
+\end{array}
+\]</span></p>
+<p>输出共两行：</p>
+<p>第一行为每次窗口滑动的最小值，第二行为每次窗口滑动的最大值。</p>
+<p><strong>思路：</strong></p>
+<p>例如针对最小值：队列中存放的是当前窗口可能最小值的下标，并且保证队列中下标对应的保持单调递增，这样队首的下标对应的值，即为当前窗口的最小值。</p>
+<p>需要维护两个问题：</p>
 <ol type="1">
-<li>波特率的计算</li>
+<li>当前下标与队首下标的差值大于等于<span
+class="math inline">\(k\)</span>，则表示队首和队尾已经不在一个窗口当中，这时需要把队首弹出。</li>
+<li>当前数小于队列尾下标对应的数时，可以弹出队尾。因为从当前数a[i]进入窗口开始，到队列尾数a[q_tt]离开窗口为止，窗口始终包含a[i]，因此最小值一定不可能为比a[i]大的数a[q_tt]，因此将队列尾弹出可以减少时间复杂度。</li>
+<li>当前窗口的最小值始终为：<span
+class="math inline">\(a[q\_hh]\)</span></li>
 </ol>
-<p>波特率：每秒钟通过信号传输的码元数称为码元的传输速率</p>
-<p>使用时钟频率 除以 波特率 可以得到传输每个码源所占用的时钟周期数</p>
-<p>$baud_cnt_max = $</p>
-<span id="more"></span>
-<ol start="2" type="1">
-<li>为什么要做打两拍操作</li>
+<p><strong>代码：</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1000005</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n,k;</span><br><span class="line"><span class="type">int</span> a[N],q[N];</span><br><span class="line"><span class="type">int</span> tt,hh;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">out_min_deque</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    hh = <span class="number">1</span> , tt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(tt&gt;=hh &amp;&amp; i-q[hh]&gt;=k) hh++;</span><br><span class="line">        <span class="keyword">while</span>(tt&gt;=hh &amp;&amp; a[i]&lt;a[q[tt]]) tt--;</span><br><span class="line">        q[++tt] = i;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(i&gt;=k) cout&lt;&lt;a[q[hh]]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">out_max_deque</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    hh = <span class="number">1</span> , tt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(tt&gt;=hh &amp;&amp; i-q[hh]&gt;=k) hh++;</span><br><span class="line">        <span class="keyword">while</span>(tt&gt;=hh &amp;&amp; a[i]&gt;a[q[tt]]) tt--;</span><br><span class="line">        q[++tt] = i;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(i&gt;=k) cout&lt;&lt;a[q[hh]]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;k;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++) cin&gt;&gt;a[i];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">out_min_deque</span>();</span><br><span class="line"></span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">out_max_deque</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="寻找段落">寻找段落</h2>
+<p><strong>题目描述</strong></p>
+<p>给定一个长度为 <span class="math inline">\(n\)</span> 的序列 <span
+class="math inline">\(a\)</span>，定义 <span
+class="math inline">\(a_i\)</span> 为第 <span
+class="math inline">\(i\)</span>
+个元素的价值。现在需要找出序列中最有价值的“段落”。段落的定义是长度在
+<span class="math inline">\([S, T]\)</span>
+之间的连续序列。最有价值段落是指平均值最大的段落。</p>
+<p><strong>段落的平均值</strong> 等于 <strong>段落总价值</strong> 除以
+<strong>段落长度</strong>。</p>
+<p><strong>思路</strong></p>
+<ol type="1">
+<li>找平均值最大的一个段落 可以转换为二分答案，<span
+class="math inline">\(s[i] = s[i-1] + a[i] -
+mid\)</span>，若存在一段区间和大于0，则段落平均值的最大值一定大于<span
+class="math inline">\(mid\)</span>。因此问题转化为寻找最大区间和问题，找到一个区间和大于0的区间，即可有效。</li>
+<li>对于一个区间<span
+class="math inline">\([l,r]\)</span>来说，区间和为前缀和之差<span
+class="math inline">\(a[r]-a[l-1]\)</span>。当我们确定右端点<span
+class="math inline">\(r\)</span>时，只需在<span
+class="math inline">\([r-t+1,r-s+1]\)</span>范围内选取一个<span
+class="math inline">\(l\)</span>，找到<span
+class="math inline">\(a[l-1]\)</span>最小值，即可找到区间最大值。</li>
 </ol>
-<p>消除亚稳态，稳定信号。</p>
-<p>在找下降沿时，不能使用<span class="math inline">\(rx\_reg1\)</span>
-和<span class="math inline">\(rx\_reg2\)</span> 求得，因为<span
-class="math inline">\(rx\_reg1\)</span>
-信号不稳定，使用其求得的结果也不稳定，因此将 <span
-class="math inline">\(rx\_reg2\)</span>再打一拍，使用<span
-class="math inline">\(rx\_reg2\)</span> 和 <span
-class="math inline">\(rx\_reg3\)</span> 求得。</p>
-<ol start="3" type="1">
-<li>代码中 <span class="math inline">\(bit\_cnt\)</span> 只计数到8</li>
-</ol>
-<p>这是因为没有计数停止位，所以只有0~8 共计数
-9位（1位起始位+8位数据位）。</p>
-<ol start="4" type="1">
-<li>rs232数据移位方向：</li>
-</ol>
-<p>最先传输的比特在低位，最后传输的比特在高位</p>
-<p>PC机通过串口调试助手往FPGA发8bit数据时，FPGA通过串口线rx一位一位地接收，从最低位到最高位依次接收，最后在FPGA里面位拼接成8比特数据。</p>
-<ol start="5" type="1">
-<li>代码：</li>
-</ol>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> uart_rx</span><br><span class="line">#<span class="keyword">parameter</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">parameter</span> UART_BPS = <span class="number">&#x27;d9600</span>,</span><br><span class="line">			  CLK_FREQ = <span class="number">&#x27;d50_000_000</span></span><br><span class="line">)</span><br><span class="line">(</span><br><span class="line">	<span class="keyword">input</span> sys_clk,sys_rst_n, </span><br><span class="line">	<span class="keyword">input</span> rx, </span><br><span class="line"></span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] po_data,</span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">reg</span> po_flag</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">localparam</span> BAUD_CNT_MAX = CLK_FREQ / UART_BPS;</span><br><span class="line"></span><br><span class="line"><span class="keyword">reg</span> rx_reg1;</span><br><span class="line"><span class="keyword">reg</span> rx_reg2;</span><br><span class="line"><span class="keyword">reg</span> rx_reg3;</span><br><span class="line"><span class="keyword">reg</span> start_nedge;</span><br><span class="line"><span class="keyword">reg</span> work_en;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">12</span>:<span class="number">0</span>] baud_cnt;</span><br><span class="line"><span class="keyword">reg</span> bit_flag;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>] bit_cnt;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] rx_data;</span><br><span class="line"><span class="keyword">reg</span> rx_flag;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		rx_reg1 &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span>  </span><br><span class="line">		rx_reg1 &lt;= rx;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		rx_reg2 &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span>  </span><br><span class="line">		rx_reg2 &lt;= rx_reg1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		rx_reg3 &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span>  </span><br><span class="line">		rx_reg3 &lt;= rx_reg2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		start_nedge &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(rx_reg2 == <span class="number">1&#x27;b0</span> &amp;&amp; rx_reg3 == <span class="number">1&#x27;b1</span>)</span><br><span class="line">		start_nedge &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">	<span class="keyword">else</span>  </span><br><span class="line">		start_nedge &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		work_en &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(start_nedge == <span class="number">1&#x27;b1</span>)	<span class="comment">// 开始工作条件</span></span><br><span class="line">		work_en &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(bit_cnt == <span class="number">4&#x27;d8</span> &amp;&amp; bit_flag == <span class="number">1&#x27;b1</span>)						<span class="comment">// 停止工作条件：完成一个字节的传输</span></span><br><span class="line">		work_en &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		baud_cnt &lt;= <span class="number">13&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(baud_cnt == BAUD_CNT_MAX - <span class="number">1</span> &amp;&amp; work_en == <span class="number">1&#x27;b1</span>)</span><br><span class="line">		baud_cnt &lt;= <span class="number">13&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(work_en == <span class="number">1&#x27;b1</span>)</span><br><span class="line">		baud_cnt &lt;= baud_cnt + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">		baud_cnt &lt;= <span class="number">13&#x27;b0</span>;	<span class="comment">// 传输完成，停止工作，波特计数器清零</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		bit_flag &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(baud_cnt == BAUD_CNT_MAX / <span class="number">2</span> - <span class="number">1</span>)</span><br><span class="line">		bit_flag &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">		bit_flag &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里由于没有计数停止位，所以只对0~8计数</span></span><br><span class="line"><span class="comment">// 传输停止位时已经将work_en拉低，不会使bit_flag有效，因此bit_cnt也不会计数</span></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		bit_cnt &lt;= <span class="number">4&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(bit_cnt == <span class="number">4&#x27;d8</span> &amp;&amp; bit_flag == <span class="number">1&#x27;b1</span>)</span><br><span class="line">		bit_cnt &lt;= <span class="number">4&#x27;d0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(bit_flag == <span class="number">1&#x27;b1</span>)</span><br><span class="line">		bit_cnt &lt;= bit_cnt + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对数据进行移位</span></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		rx_data &lt;= <span class="number">8&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(bit_flag == <span class="number">1&#x27;b1</span> &amp;&amp; bit_cnt &gt;= <span class="number">4&#x27;d1</span> &amp;&amp; bit_cnt &lt;= <span class="number">4&#x27;d8</span>)</span><br><span class="line">		rx_data = &#123;rx_reg3,rx_data[<span class="number">7</span>:<span class="number">1</span>]&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 传输完8比特，拉高rx_flag</span></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		rx_flag &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(bit_cnt == <span class="number">4&#x27;d8</span> &amp;&amp; bit_flag == <span class="number">1&#x27;b1</span>)	<span class="comment">// 8位的最后一个比特传输完成</span></span><br><span class="line">		rx_flag &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">	<span class="keyword">else</span>  </span><br><span class="line">		rx_flag &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// po_data 和 po_flag 都以 rx_data 为基准，可以实现统一时间输出</span></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		po_data &lt;= <span class="number">8&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(rx_flag == <span class="number">1&#x27;b1</span>)</span><br><span class="line">		po_data &lt;= rx_data;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> sys_clk <span class="keyword">or</span> <span class="keyword">negedge</span> sys_rst_n)</span><br><span class="line">	<span class="keyword">if</span>(sys_rst_n == <span class="number">1&#x27;b0</span>)</span><br><span class="line">		po_flag &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		po_flag &lt;= rx_flag;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<p><strong>代码</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1000005</span> , INF = <span class="number">10000</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n,s,t;</span><br><span class="line"><span class="type">int</span> a[N];</span><br><span class="line"><span class="type">double</span> b[N];</span><br><span class="line"><span class="type">int</span> q[N],tt,hh;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">check</span><span class="params">(<span class="type">double</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    hh = <span class="number">1</span> , tt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">        b[i] = b[i<span class="number">-1</span>] + a[i] - x;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// for(int i=s,j=0;i&lt;=n;i++,j++)</span></span><br><span class="line">    <span class="comment">// &#123;</span></span><br><span class="line">    <span class="comment">//     //i为区间尾,这里找从1~j的最小区间和</span></span><br><span class="line">    <span class="comment">//     while(tt&gt;=hh &amp;&amp; b[j]&lt;b[q[tt]]) tt--;</span></span><br><span class="line">    <span class="comment">//     q[++tt] = j;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//     while(tt&gt;=hh &amp;&amp; i-q[hh]&gt;t) hh++;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//     if(b[i] - b[q[hh]] &gt; 0.00001) return true;</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(i&gt;=s)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span>(tt&gt;=hh &amp;&amp; b[i-s]&lt;b[q[tt]]) tt--;</span><br><span class="line">            q[++tt] = i-s;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(tt&gt;=hh &amp;&amp; i-q[hh]&gt;t) hh++;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(tt&gt;=hh &amp;&amp; b[i]-b[q[hh]]&gt;<span class="number">0</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;s,&amp;t);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++) </span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;a[i]);</span><br><span class="line"></span><br><span class="line">    <span class="type">double</span> l = -INF , r = INF;</span><br><span class="line">    <span class="keyword">while</span>(r-l &gt; <span class="number">1e-4</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">double</span> mid = (r+l) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">check</span>(mid)) l = mid;</span><br><span class="line">        <span class="keyword">else</span> r = mid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%.3f&quot;</span>,l);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="st表-rmq">ST表 || RMQ</h2>
+<p>该类问题为求：查询区间的最大值或最小值，思路用到了倍增思想。</p>
+<p>设<span class="math inline">\(f[i][j]\)</span>为从<span
+class="math inline">\(i\)</span>开始的<span
+class="math inline">\(2^j\)</span>个数中的最大值，可以从短到长合并，求得所有<span
+class="math inline">\(f[i][j]\)</span></p>
+<p>最后查询区间，只需查询<span
+class="math inline">\(max(f[l1][k],f[l2][k])\)</span>。</p>
+<p>代码：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100005</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n,m;</span><br><span class="line"><span class="type">int</span> a[N],f[N][<span class="number">20</span>];</span><br><span class="line"><span class="type">int</span> l,r;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">read</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> x=<span class="number">0</span>,f=<span class="number">1</span>;<span class="type">char</span> ch=<span class="built_in">getchar</span>();</span><br><span class="line">	<span class="keyword">while</span> (ch&lt;<span class="string">&#x27;0&#x27;</span>||ch&gt;<span class="string">&#x27;9&#x27;</span>)&#123;<span class="keyword">if</span> (ch==<span class="string">&#x27;-&#x27;</span>) f=<span class="number">-1</span>;ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">	<span class="keyword">while</span> (ch&gt;=<span class="string">&#x27;0&#x27;</span>&amp;&amp;ch&lt;=<span class="string">&#x27;9&#x27;</span>)&#123;x=x*<span class="number">10</span>+ch<span class="number">-48</span>;ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">	<span class="keyword">return</span> x*f;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">query</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> k = <span class="built_in">log2</span>(r-l+<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">max</span>(f[l][k],f[r-(<span class="number">1</span>&lt;&lt;k)+<span class="number">1</span>][k]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    n = <span class="built_in">read</span>();</span><br><span class="line">    m = <span class="built_in">read</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++) a[i] = <span class="built_in">read</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++) f[i][<span class="number">0</span>] = a[i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">20</span>;i++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> r2 = j + (<span class="number">1</span>&lt;&lt;i) - <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> l2 = j + (<span class="number">1</span>&lt;&lt;(i<span class="number">-1</span>));</span><br><span class="line">            <span class="keyword">if</span>(r2&gt;n) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            f[j][i] = <span class="built_in">max</span>(f[j][i<span class="number">-1</span>],f[l2][i<span class="number">-1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        l = <span class="built_in">read</span>();</span><br><span class="line">        r = <span class="built_in">read</span>();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">query</span>(l,r));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="良好的感觉">良好的感觉</h2>
+<p><strong>题目描述</strong></p>
+<p>kkk 做了一个人体感觉分析器。每一天，人都有一个感受值 <span
+class="math inline">\(A_i\)</span>，<span
+class="math inline">\(A_i\)</span> 越大，表示人感觉越舒适。在一段时间
+<span class="math inline">\(\left[i, j\right]\)</span>
+内，人的舒适程度定义为 <span class="math inline">\(\left[i,
+j\right]\)</span> 中最不舒服的那一天的感受值 <span
+class="math inline">\(\times\)</span> <span
+class="math inline">\(\left[i,
+j\right]\)</span>中每一天感受值的和。现在给出 kkk 在连续 <span
+class="math inline">\(N\)</span> 天中的感受值，请问，在哪一段时间，kkk
+感觉最舒适？</p>
+<p><strong>思路</strong></p>
+<p>单调栈：给定一个序列，求每个元素在其后第一个大于他的元素下标。可以从后往前跑一遍，将小于等于他的元素出栈，此时栈顶的下标即为第一个大于他的元素。</p>
+<p><strong>代码</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1000005</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> a[N],s[N];</span><br><span class="line"><span class="type">int</span> l[N],r[N];</span><br><span class="line"><span class="type">int</span> stk[N],hh,tt;</span><br><span class="line"><span class="type">int</span> ans;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++) cin&gt;&gt;a[i];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++) s[i] = s[i<span class="number">-1</span>] + a[i];</span><br><span class="line"></span><br><span class="line">	tt = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(tt&gt;=<span class="number">0</span> &amp;&amp; a[i]&lt;=a[stk[tt]]) tt--;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(tt&gt;=<span class="number">0</span>) l[i] = stk[tt];</span><br><span class="line">		<span class="keyword">else</span> l[i] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		stk[++tt] = i;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	tt = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=n;i&gt;=<span class="number">1</span>;i--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(tt&gt;=<span class="number">0</span> &amp;&amp; a[i]&lt;=a[stk[tt]]) tt--;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(tt&gt;=<span class="number">0</span>) r[i] = stk[tt];</span><br><span class="line">		<span class="keyword">else</span> r[i] = n+<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">		stk[++tt] = i;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> sum = a[i] * (s[r[i]<span class="number">-1</span>]-s[l[i]]);</span><br><span class="line">		ans = <span class="built_in">max</span>(ans,sum);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	cout&lt;&lt;ans&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>fpga</category>
-        <category>通信协议</category>
+        <category>算法竞赛</category>
       </categories>
       <tags>
-        <tag>fpga</tag>
-        <tag>rs232</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Register Clustering Methodology for Low Power Clock Tree Synthesis</title>
-    <url>/2024/08/03/EDA/3.Register%20Clustering%20Methodology%20for%20Low%20Power%20Clock%20Tree%20Synthesis/</url>
-    <content><![CDATA[<h1
-id="register-clustering-methodology-for-low-power-clock-tree-synthesis"><strong>Register
-Clustering Methodology for Low Power Clock Tree Synthesis</strong></h1>
-<h2 id="概要">1.概要</h2>
-<h3 id="背景">背景</h3>
-<p>​
-一个时钟网络通常消耗整个芯片功率的40%。因此，许多研究者关注根据(1)中提出的参数对时钟网络进行功率优化。</p>
-<p>KMR：基于k均值的寄存器聚类算法</p>
-<p>KSR：基于k-分裂的寄存器聚类算法</p>
-<p>GSR：基于贪婪搜索的寄存器聚类算法</p>
-<span id="more"></span>
-<h2 id="算法描述">2.算法描述</h2>
-<h3 id="kmr">2.1KMR</h3>
-<h4 id="伪中心pseudo-center">2.2.1.伪中心（“Pseudo Center” ）</h4>
-<p>​
-“伪中心”技术不仅避免了寄存器聚类算法的失败，而且还破坏了可能违反约束条件的大型聚类（包括旋转、最大扇出、最大负载电容等）。</p>
-<h4 id="algorithm1-get-center">2.2.2.Algorithm1 : Get center</h4>
-<p>​ 如果一个集合 <span class="math inline">\(C\)</span>
-是空集，那么他的中心点为最大集合的一半的点的几何中心；否则，则为该集合所有点的集合中心。</p>
-<h4 id="簇的个数">2.2.3 簇的个数</h4>
-<p>​ 相比K-Means算法，KMR算法根据以下公式确定簇的个数。</p>
-<p>​ $ K = Total_r / Max_f $</p>
-<p>​ <span class="math inline">\(Total_r\)</span> 表示寄存器总数，<span
-class="math inline">\(Max_f\)</span>表示缓冲器最大扇出，<span
-class="math inline">\(\alpha\)</span> 为用户自定义参数，通常大于1。</p>
-<h4 id="算法流程">2.2.4 算法流程</h4>
-<p>​ 首先计算出簇的个数<span
-class="math inline">\(K\)</span>，初始化<span
-class="math inline">\(K\)</span>个簇的中心点，开始迭代。每次迭代先将所有簇清空，然后计算出每个点到每个簇的距离，将其分配到离他最近的簇中；全部分配完之后，重新计算簇的中心点，开始下一轮迭代，直到总线长不再减少为止。</p>
-<h4 id="小结">2.2.5 小结</h4>
-<p>​ 白看半天，其实跟K-Means算法一样，只是多了一个计算K的方法。</p>
-<h3 id="ksr">2.2 KSR</h3>
-<p>​ KMR没有考虑寄存器的分布，选择一个不合适的<span
-class="math inline">\(K\)</span>，结果会很糟。</p>
-<p>​
-首先选取最小生成树方法生成一个初始聚类，然后再使用MSR方法迭代优化。</p>
-<h3 id="gsr">2.3 GSR</h3>
-<p>​
-从1~n遍历所有寄存器，如果可以找到满足条件的中心，则将该寄存器插入到这个簇中，否则，将该寄存器设置为一个新的簇中心。</p>
-<h3 id="buffer-allocation">2.4 buffer allocation</h3>
-<p>​
-buffer放置于每个簇的中心，但需要考虑中心点放buffer是否会与寄存器重叠问题，需要将buffer向上下左右移动微调。</p>
-]]></content>
-      <categories>
-        <category>EDA</category>
-      </categories>
-      <tags>
-        <tag>EDA</tag>
-        <tag>cluster</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Toward Controllable Hierarchical Clock Tree Synthesis with Skew-Latency-Load Tree</title>
-    <url>/2024/08/03/EDA/6%E9%B9%8F%E5%9F%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4/</url>
-    <content><![CDATA[<h2 id="skew-latency-load-tree-construction">1.SKEW-LATENCY-LOAD TREE
-CONSTRUCTION</h2>
-<p>首先提出了时钟延迟(latency)，时钟漂移(skew)，负载电容与线长的关系。</p>
-<p><span class="math inline">\(PL(s_i)\)</span>denotes the path length
-from the source to <span class="math inline">\(s_i\)</span>of <span
-class="math inline">\(T\)</span> .</p>
-<p><span class="math inline">\(\begin{gathered}
-\text { skew } \propto \max _{s_i \in \mathcal{S}}\left\{P
-L\left(s_i\right)\right\}-\min _{s_i \in \mathcal{S}}\left\{P
-L\left(s_i\right)\right\}, \\
-\text { latency } \max _{\max } \propto \max _{s_i \in
-\mathcal{S}}\left\{P L\left(s_i\right)\right\}, \\
-\text { load } \propto W L(T),
-\end{gathered}\)</span></p>
-<span id="more"></span>
-<h3 id="sllt">1.1 SLLT</h3>
-<p><span class="math inline">\(\alpha\)</span>
-代表浅度，可以反应时钟树系统的延迟(latency)。</p>
-<p><span class="math inline">\(\alpha=\max _{s_i \in
-\mathcal{S}}\left\{\frac{P L\left(s_i\right)}{M
-D\left(s_i\right)}\right\},\)</span> PL为时钟到<span
-class="math inline">\(s_i\)</span>的线长，MD为时钟到<span
-class="math inline">\(s_i\)</span>的曼哈顿距离。</p>
-<p><span class="math inline">\(\beta\)</span>
-代表亮度，可以反应时钟树的负载电容。</p>
-<p><span class="math inline">\(\beta=\frac{W L(T)}{W
-L(\operatorname{MST}(G))}\)</span>
-，WL为树的总线长，MST为最小生成树。</p>
-<p><span class="math inline">\(\gamma\)</span>
-代表偏斜度，可以反应时钟漂移。</p>
-<p><span class="math inline">\(\gamma=\frac{\max _{s_i \in
-\mathcal{S}}\left\{P L\left(s_i\right)\right\}}{\overline{P L}}
-.\)</span></p>
-]]></content>
-      <categories>
-        <category>EDA</category>
-      </categories>
-      <tags>
-        <tag>EDA</tag>
-        <tag>cluster</tag>
+        <tag>算法竞赛</tag>
+        <tag>数据结构</tag>
       </tags>
   </entry>
   <entry>
@@ -474,15 +595,33 @@ L(\operatorname{MST}(G))}\)</span>
       </tags>
   </entry>
   <entry>
-    <title>Sublime快捷键</title>
-    <url>/2024/08/03/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E5%9F%BA%E7%A1%80/sublime%E5%BF%AB%E6%8D%B7%E9%94%AE/</url>
-    <content><![CDATA[<h1 id="sublime快捷键">Sublime快捷键</h1>
-<h2 id="查找替换">查找替换</h2>
-<p>查找 ： Ctrl + F</p>
-<p>查找替换 ：Ctrl + H</p>
+    <title>2024数学建模国赛</title>
+    <url>/2024/09/03/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A12024/</url>
+    <content><![CDATA[<h2 id="第二问思路">第二问思路</h2>
+<p>是否对配件检验：</p>
+<ol type="1">
+<li>如果对配件检验：得到的配件一定是合格品，只需计算平均价值。</li>
+</ol>
+<p><span class="math inline">\(E = \frac{p*(w+c)}{p}\)</span></p>
+<p><span class="math inline">\(p\)</span>表示合格品概率，<span
+class="math inline">\(w\)</span>表示配件购买价格，<span
+class="math inline">\(c\)</span>表示配件检验成本</p>
+<ol start="2" type="1">
+<li>不对配件检验：会提高成品的不合格率</li>
+</ol>
+<p>是否对成品检验：</p>
+<ol type="1">
+<li><p>对成品检验：需要付出检验费用，但卖出的成品一定是合格品，所以不需要支付退还费用。</p></li>
+<li><p>对成品不检验：不需要检验费用，但卖出的成品有一部分是不合格品，需要支付退还费用。</p></li>
+</ol>
 ]]></content>
       <categories>
         <category>计算机基础</category>
+        <category>git</category>
       </categories>
+      <tags>
+        <tag>git</tag>
+        <tag>linux</tag>
+      </tags>
   </entry>
 </search>
