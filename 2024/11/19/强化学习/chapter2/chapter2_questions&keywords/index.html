@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Chapter2 马尔可夫决策过程（MDP） 1 Keywords  马尔可夫性质(Markov Property): 如果某一个过程未来的转移跟过去是无关，只由现在的状态决定，那么其满足马尔可夫性质。换句话说，一个状态的下一个状态只取决于它当前状态，而跟它当前状态之前的状态都没有关系。 马尔可夫链(Markov Chain): 概率论和数理统计中具有马尔可夫性质（Markov p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2024/11/19/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/chapter2/chapter2_questions&keywords/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Chapter2 马尔可夫决策过程（MDP） 1 Keywords  马尔可夫性质(Markov Property): 如果某一个过程未来的转移跟过去是无关，只由现在的状态决定，那么其满足马尔可夫性质。换句话说，一个状态的下一个状态只取决于它当前状态，而跟它当前状态之前的状态都没有关系。 马尔可夫链(Markov Chain): 概率论和数理统计中具有马尔可夫性质（Markov p">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-11-19T10:21:25.941Z">
+<meta property="article:modified_time" content="2024-11-19T06:58:51.484Z">
+<meta property="article:author" content="skyang">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/11/19/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/chapter2/chapter2_questions&keywords/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/11/19/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/chapter2/chapter2_questions&keywords/","path":"2024/11/19/强化学习/chapter2/chapter2_questions&keywords/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter2-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8Bmdp"><span class="nav-number">1.</span> <span class="nav-text">Chapter2
+马尔可夫决策过程（MDP）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#keywords"><span class="nav-number">1.1.</span> <span class="nav-text">1 Keywords</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#questions"><span class="nav-number">1.2.</span> <span class="nav-text">2 Questions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#something-about-interview"><span class="nav-number">1.3.</span> <span class="nav-text">3 Something About Interview</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">skyang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/19/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/chapter2/chapter2_questions&keywords/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="skyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-11-19 18:21:25 / 修改时间：14:58:51" itemprop="dateCreated datePublished" datetime="2024-11-19T18:21:25+08:00">2024-11-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="chapter2-马尔可夫决策过程mdp">Chapter2
+马尔可夫决策过程（MDP）</h1>
+<h2 id="keywords">1 Keywords</h2>
+<ul>
+<li><strong>马尔可夫性质(Markov Property):</strong>
+如果某一个过程未来的转移跟过去是无关，只由现在的状态决定，那么其满足马尔可夫性质。换句话说，一个状态的下一个状态只取决于它当前状态，而跟它当前状态之前的状态都没有关系。</li>
+<li><strong>马尔可夫链(Markov Chain):</strong>
+概率论和数理统计中具有马尔可夫性质（Markov
+property）且存在于离散的指数集（index set）和状态空间（state
+space）内的随机过程（stochastic process）。</li>
+<li><strong>状态转移矩阵(State Transition Matrix):</strong>
+状态转移矩阵类似于一个 conditional probability，当我们知道当前我们在
+<span class="math inline">\(s_t\)</span>
+这个状态过后，到达下面所有状态的一个概念，它每一行其实描述了是从一个节点到达所有其它节点的概率。</li>
+<li><strong>马尔可夫奖励过程(Markov Reward Process, MRP)：</strong>
+即马尔可夫链再加上了一个奖励函数。在
+MRP之中，转移矩阵跟它的这个状态都是跟马尔可夫链一样的，多了一个奖励函数(reward
+function)。奖励函数是一个期望，它说当你到达某一个状态的时候，可以获得多大的奖励。</li>
+<li><strong>horizon:</strong> 定义了同一个 episode
+或者是整个一个轨迹的长度，它是由有限个步数决定的。</li>
+<li><strong>return:</strong>
+把奖励进行折扣(discounted)，然后获得的对应的收益。</li>
+<li><strong>Bellman Equation（贝尔曼等式）:</strong>
+定义了当前状态与未来状态的迭代关系，表示当前状态的值函数可以通过下个状态的值函数来计算。Bellman
+Equation 因其提出者、动态规划创始人 Richard Bellman 而得名
+，同时也被叫作“动态规划方程”。<span class="math inline">\(V(s)=R(S)+
+\gamma \sum_{s&#39; \in S}P(s&#39;|s)V(s&#39;)\)</span>
+，特别地，矩阵形式：<span class="math inline">\(V=R+\gamma
+PV\)</span>。</li>
+<li><strong>Monte Carlo Algorithm（蒙特卡罗方法）：</strong>
+可用来计算价值函数的值。通俗的讲，我们当得到一个MRP过后，我们可以从某一个状态开始，然后让它让把这个小船放进去，让它随波逐流，这样就会产生一个轨迹。产生了一个轨迹过后，就会得到一个奖励，那么就直接把它的
+Discounted 的奖励 <span class="math inline">\(g\)</span>
+直接算出来。算出来过后就可以把它积累起来，当积累到一定的轨迹数量过后，然后直接除以这个轨迹，然后就会得到它的这个价值。</li>
+<li><strong>Iterative Algorithm（动态规划方法）：</strong>
+可用来计算价值函数的值。通过一直迭代对应的Bellman
+Equation，最后使其收敛。当这个最后更新的状态跟你上一个状态变化并不大的时候，这个更新就可以停止。</li>
+<li><strong>Q函数 (action-value function)：</strong>
+其定义的是某一个状态某一个行为，对应的它有可能得到的 return
+的一个期望（over policy function）。</li>
+<li><strong>MDP中的prediction（即policy evaluation问题）：</strong>
+给定一个 MDP 以及一个 policy <span class="math inline">\(\pi\)</span>
+，去计算它的 value
+function，即每个状态它的价值函数是多少。其可以通过动态规划方法（Iterative
+Algorithm）解决。</li>
+<li><strong>MDP中的control问题：</strong> 寻找一个最佳的一个策略，它的
+input
+就是MDP，输出是通过去寻找它的最佳策略，然后同时输出它的最佳价值函数(optimal
+value function)以及它的这个最佳策略(optimal
+policy)。其可以通过动态规划方法（Iterative Algorithm）解决。</li>
+<li><strong>最佳价值函数(Optimal Value Function)：</strong>
+我们去搜索一种 policy <span class="math inline">\(\pi\)</span>
+，然后我们会得到每个状态它的状态值最大的一个情况，<span
+class="math inline">\(v^*\)</span>
+就是到达每一个状态，它的值的极大化情况。在这种极大化情况上面，我们得到的策略就可以说它是最佳策略(optimal
+policy)。optimal policy
+使得每个状态，它的状态函数都取得最大值。所以当我们说某一个 MDP
+的环境被解了过后，就是说我们可以得到一个 optimal value
+function，然后我们就说它被解了。</li>
+</ul>
+<h2 id="questions">2 Questions</h2>
+<ul>
+<li><p>为什么在马尔可夫奖励过程（MRP）中需要有<strong>discount
+factor</strong>?</p>
+<p>答：</p>
+<ol type="1">
+<li>首先，是有些马尔可夫过程是<strong>带环</strong>的，它并没有终结，然后我们想<strong>避免这个无穷的奖励</strong>；</li>
+<li>另外，我们是想把这个<strong>不确定性</strong>也表示出来，希望<strong>尽可能快</strong>地得到奖励，而不是在未来某一个点得到奖励；</li>
+<li>接上面一点，如果这个奖励是它是有实际价值的了，我们可能是更希望立刻就得到奖励，而不是我们后面再得到奖励。</li>
+<li>还有在有些时候，这个系数也可以把它设为 0。比如说，当我们设为 0
+过后，然后我们就只关注了它当前的奖励。我们也可以把它设为 1，设为 1
+的话就是对未来并没有折扣，未来获得的奖励跟我们当前获得的奖励是一样的。</li>
+</ol>
+<p>所以，这个系数其实是应该可以作为强化学习 agent 的一个 hyperparameter
+来进行调整，然后就会得到不同行为的 agent。</p></li>
+<li><p>为什么矩阵形式的Bellman Equation的解析解比较难解？</p>
+<p>答：通过矩阵求逆的过程，就可以把这个 V
+的这个价值的解析解直接求出来。但是一个问题是这个矩阵求逆的过程的复杂度是
+<span
+class="math inline">\(O(N^3)\)</span>。所以就当我们状态非常多的时候，比如说从我们现在十个状态到一千个状态，到一百万个状态。那么当我们有一百万个状态的时候，这个转移矩阵就会是个一百万乘以一百万的一个矩阵。这样一个大矩阵的话求逆是非常困难的，所以这种通过解析解去解，只能对于很小量的MRP。</p></li>
+<li><p>计算贝尔曼等式（Bellman Equation）的常见方法以及区别？</p>
+<p>答：</p>
+<ol type="1">
+<li><strong>Monte Carlo Algorithm（蒙特卡罗方法）：</strong>
+可用来计算价值函数的值。通俗的讲，我们当得到一个MRP过后，我们可以从某一个状态开始，然后让它让把这个小船放进去，让它随波逐流，这样就会产生一个轨迹。产生了一个轨迹过后，就会得到一个奖励，那么就直接把它的
+Discounted 的奖励 <span class="math inline">\(g\)</span>
+直接算出来。算出来过后就可以把它积累起来，当积累到一定的轨迹数量过后，然后直接除以这个轨迹，然后就会得到它的这个价值。</li>
+<li><strong>Iterative Algorithm（动态规划方法）：</strong>
+可用来计算价值函数的值。通过一直迭代对应的Bellman
+Equation，最后使其收敛。当这个最后更新的状态跟你上一个状态变化并不大的时候，通常是小于一个阈值
+<span class="math inline">\(\gamma\)</span> ，这个更新就可以停止。</li>
+<li><strong>以上两者的结合方法：</strong> 另外我们也可以通过
+Temporal-Difference Learning 的那个办法。这个
+<code>Temporal-Difference Learning</code> 叫
+<code>TD Leanring</code>，就是动态规划和蒙特卡罗的一个结合。</li>
+</ol></li>
+<li><p>马尔可夫奖励过程（MRP）与马尔可夫决策过程 （MDP）的区别？</p>
+<p>答：相对于 MRP，马尔可夫决策过程(Markov Decision Process)多了一个
+decision，其它的定义跟 MRP 都是类似的。这里我们多了一个决策，多了一个
+action ，那么这个状态转移也多了一个
+condition，就是采取某一种行为，然后你未来的状态会不同。它不仅是依赖于你当前的状态，也依赖于在当前状态你这个
+agent
+它采取的这个行为会决定它未来的这个状态走向。对于这个价值函数，它也是多了一个条件，多了一个你当前的这个行为，就是说你当前的状态以及你采取的行为会决定你在当前可能得到的奖励多少。</p>
+<p>另外，两者之间是有转换关系的。具体来说，已知一个 MDP 以及一个 policy
+<span class="math inline">\(\pi\)</span> 的时候，我们可以把 MDP
+转换成MRP。在 MDP 里面，转移函数 <span
+class="math inline">\(P(s&#39;|s,a)\)</span>
+是基于它当前状态以及它当前的 action，因为我们现在已知它 policy
+function，就是说在每一个状态，我们知道它可能采取的行为的概率，那么就可以直接把这个
+action 进行加和，那我们就可以得到对于 MRP 的一个转移，这里就没有
+action。同样地，对于奖励，我们也可以把 action
+拿掉，这样就会得到一个类似于 MRP 的奖励。</p></li>
+<li><p>MDP 里面的状态转移跟 MRP 以及 MP 的结构或者计算方面的差异？</p>
+<p>答：</p>
+<ul>
+<li>对于之前的马尔可夫链的过程，它的转移是直接就决定，就从你当前是
+s，那么就直接通过这个转移概率就直接决定了你下一个状态会是什么。</li>
+<li>但是对于 MDP，它的中间多了一层这个行为 a
+，就是说在你当前这个状态的时候，你首先要决定的是采取某一种行为。然后因为你有一定的不确定性，当你当前状态决定你当前采取的行为过后，你到未来的状态其实也是一个概率分布。所以你采取行为以及你决定，然后你可能有有多大的概率到达某一个未来状态，以及另外有多大概率到达另外一个状态。所以在这个当前状态跟未来状态转移过程中这里多了一层决策性，这是MDP跟之前的马尔可夫过程很不同的一个地方。在马尔科夫决策过程中，行为是由
+agent 决定，所以多了一个 component，agent
+会采取行为来决定未来的状态转移。</li>
+</ul></li>
+<li><p>我们如何寻找最佳的policy，方法有哪些？</p>
+<p>答：本质来说，当我们取得最佳的价值函数过后，我们可以通过对这个 Q
+函数进行极大化，然后得到最佳的价值。然后，我们直接在这个Q函数上面取一个让这个action最大化的值，然后我们就可以直接提取出它的最佳的policy。</p>
+<p>具体方法：</p>
+<ol type="1">
+<li><strong>穷举法（一般不使用）：</strong>假设我们有有限多个状态、有限多个行为可能性，那么每个状态我们可以采取这个
+A 种行为的策略，那么总共就是 <span
+class="math inline">\(|A|^{|S|}\)</span> 个可能的
+policy。我们可以把这个穷举一遍，然后算出每种策略的 value
+function，然后对比一下可以得到最佳策略。但是效率极低。</li>
+<li><strong>Policy iteration：</strong>
+一种迭代方法，有两部分组成，下面两个步骤一直在迭代进行，最终收敛：(有些类似于ML中EM算法（期望-最大化算法）)
+<ul>
+<li>第一个步骤是 <strong>policy evaluation</strong>
+，即当前我们在优化这个 policy <span class="math inline">\(\pi\)</span>
+，所以在优化过程中得到一个最新的这个 policy 。</li>
+<li>第二个步骤是 <strong>policy improvement</strong>
+，即取得价值函数后，进一步推算出它的 Q 函数。得到 Q
+函数过后，那我们就直接去取它的极大化。</li>
+</ul></li>
+<li><strong>Value iteration:</strong> 我们一直去迭代 Bellman Optimality
+Equation，到了最后，它能逐渐趋向于最佳的策略，这是 value iteration
+算法的精髓，就是我们去为了得到最佳的 <span
+class="math inline">\(v^*\)</span> ，对于每个状态它的 <span
+class="math inline">\(v^*\)</span> 这个值，我们直接把这个 Bellman
+Optimality Equation
+进行迭代，迭代了很多次之后它就会收敛到最佳的policy以及其对应的状态，这里面是没有policy
+function的。</li>
+</ol></li>
+</ul>
+<h2 id="something-about-interview">3 Something About Interview</h2>
+<ul>
+<li><p>高冷的面试官:
+请问马尔可夫过程是什么?马尔可夫决策过程又是什么?其中马尔可夫最重要的性质是什么呢?</p>
+<p>答: 马尔可夫过程是是一个二元组 $ &lt;S,P&gt; $
+,S为状态的集合,P为状态转移概率矩阵; 而马尔可夫决策过程是一个五元组 $
+&lt;S,P,A,R,&gt; $,其中 <span class="math inline">\(R\)</span> 表示为从
+<span class="math inline">\(S\)</span> 到 <span
+class="math inline">\(S&#39;\)</span> 能够获得的奖励期望, <span
+class="math inline">\(\gamma\)</span>为折扣因子, <span
+class="math inline">\(A\)</span> 为动作集合.
+马尔可夫最重要的性质是下一个状态只与当前状态有关,与之前的状态无关,也就是
+<span class="math inline">\(P[S_{t+1} | S_t] =
+P[S_{t+1}|S_1,S_2,...,S_t]\)</span></p></li>
+<li><p>高冷的面试官: 请问我们一般怎么求解马尔可夫决策过程?</p>
+<p>答:
+我们直接求解马尔可夫决策过程可以直接求解贝尔曼等式(动态规划方程),即<span
+class="math inline">\(V(s)=R(S)+ \gamma \sum_{s&#39; \in
+S}P(s&#39;|s)V(s&#39;)\)</span> ，特别地，矩阵形式：<span
+class="math inline">\(V=R+\gamma
+PV\)</span>.但是贝尔曼等式很难求解且计算复杂度较高,所以可以使用动态规划,蒙特卡洛,时间差分等方法求解.</p></li>
+<li><p>高冷的面试官:
+请问如果数据流不满足马尔科夫性怎么办？应该如何处理?</p>
+<p>答:
+如果不满足马尔科夫性,即下一个状态与之前的状态也有关，若还仅仅用当前的状态来进行求解决策过程，势必导致决策的泛化能力变差。
+为了解决这个问题，可以利用RNN对历史信息建模，获得包含历史信息的状态表征。表征过程可以
+使用注意力机制等手段。最后在表征状态空间求解马尔可夫决策过程问题。</p></li>
+<li><p>高冷的面试官:
+请分别写出基于状态值函数的贝尔曼方程以及基于动作值的贝尔曼方程.</p>
+<p>答:</p>
+<ul>
+<li>基于状态值函数的贝尔曼方程: <span class="math inline">\(v_{\pi}(s) =
+\sum_{a}{\pi(a|s)}\sum_{s&#39;,r}{p(s&#39;,r|s,a)[r(s,a)+\gamma
+v_{\pi}(s&#39;)]}\)</span></li>
+<li>基于动作值的贝尔曼方程: <span
+class="math inline">\(q_{\pi}(s,a)=\sum_{s&#39;,r}p(s&#39;,r|s,a)[r(s&#39;,a)+\gamma
+v_{\pi}(s&#39;)]\)</span></li>
+</ul></li>
+<li><p>高冷的面试官: 请问最佳价值函数(optimal value function) <span
+class="math inline">\(v^*\)</span> 和最佳策略(optimal policy) <span
+class="math inline">\(\pi^*\)</span> 为什么等价呢？</p>
+<p>答: 最佳价值函数的定义为： <span class="math inline">\(v^*
+(s)=\max_{\pi} v^{\pi}(s)\)</span> 即我们去搜索一种 policy <span
+class="math inline">\(\pi\)</span> 来让每个状态的价值最大。<span
+class="math inline">\(v^*\)</span>
+就是到达每一个状态，它的值的极大化情况。在这种极大化情况上面，我们得到的策略就可以说它是最佳策略(optimal
+policy)，即 $ ^{*}(s)=~ v^{}(s) $. Optimal policy
+使得每个状态的价值函数都取得最大值。所以如果我们可以得到一个 optimal
+value function，就可以说某一个 MDP
+的环境被解。在这种情况下，它的最佳的价值函数是一致的，就它达到的这个上限的值是一致的，但这里可能有多个最佳的
+policy，就是说多个 policy 可以取得相同的最佳价值。</p></li>
+<li><p>高冷的面试官：能不能手写一下第n步的值函数更新公式呀？另外，当n越来越大时，值函数的期望和方差分别变大还是变小呢？</p>
+<p>答：<span
+class="math inline">\(n\)</span>越大，方差越大，期望偏差越小。值函数的更新公式?
+话不多说，公式如下： <span class="math display">\[
+Q\left(S, A\right) \leftarrow Q\left(S,
+A\right)+\alpha\left[\sum_{i=1}^{n} \gamma^{i-1} R_{t+i}+\gamma^{n} \max
+_{a}   Q\left(S&#39;,a\right)-Q\left(S, A\right)\right]
+\]</span></p></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/11/19/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/chapter2/chapter2/" rel="prev" title="">
+                  <i class="fa fa-angle-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">skyang</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
