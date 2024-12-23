@@ -206,7 +206,7 @@ blockquote {
   margin-left: 0;
   margin-right: 0;
   padding: 0.25rem 0.75rem;
-  background: var(--block);
+  background: #ffeafa;
   border-left: 4px solid var(--text-meta);
   border-radius: 4px 12px 12px 4px;
   color: var(--text-p2);
@@ -1565,10 +1565,8 @@ div.toast.show {
   z-index: 8;
   top: 0;
   background: var(--site-bg);
-  position: sticky;
-  position: -webkit-sticky;
-  margin-bottom: 1px;
-  margin-top: -8px;
+  position: inherit;
+  background: none;
 }
 .navbar:after {
   content: '';
@@ -1605,7 +1603,7 @@ div.toast.show {
 }
 .navbar nav a {
   padding: 2px 0.75rem;
-  margin: 10px 0.25rem 8px 0.25rem;
+  margin: 10px 0.25rem 8px 0;
   line-height: 2;
   color: var(--text-p3);
   border-radius: 4px;
@@ -6432,6 +6430,7 @@ body>.sitebg {
   right: 0;
   bottom: 0;
   background-size: cover;
+  background-image: url("https://haowallpaper.com/link/common/file/previewFileImg/16092917546470784");
 }
 body>.sitebg .siteblur {
   width: 100%;
