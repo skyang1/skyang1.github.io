@@ -206,7 +206,7 @@ blockquote {
   margin-left: 0;
   margin-right: 0;
   padding: 0.25rem 0.75rem;
-  background: #ffeafa;
+  background: #fafae7;
   border-left: 4px solid var(--text-meta);
   border-radius: 4px 12px 12px 4px;
   color: var(--text-p2);
