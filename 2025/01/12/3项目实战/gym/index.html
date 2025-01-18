@@ -1,0 +1,700 @@
+
+<!DOCTYPE html><html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.29.1" theme-name="Stellar" theme-version="1.29.1">
+  
+  <meta name="generator" content="Hexo 7.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  
+  <title>1.Gymnasium使用 - Skyang</title>
+
+  
+    <meta name="description" content="基础知识  快速开始 注意点：  make有了返回值，返回初始状态和辅助信息 新增判断交互是否结束的标志：(terminated:任务成功&#x2F;失败；truncated:任务超时被截断)  12345678910111213import gymenv &#x3D; gym.make(&quot;CartPole-v1&quot;, render_mode&#x3D;&quot;human&quot;)observati">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.Gymnasium使用">
+<meta property="og:url" content="https://skyang1.github.io/2025/01/12/3%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/gym/index.html">
+<meta property="og:site_name" content="Skyang">
+<meta property="og:description" content="基础知识  快速开始 注意点：  make有了返回值，返回初始状态和辅助信息 新增判断交互是否结束的标志：(terminated:任务成功&#x2F;失败；truncated:任务超时被截断)  12345678910111213import gymenv &#x3D; gym.make(&quot;CartPole-v1&quot;, render_mode&#x3D;&quot;human&quot;)observati">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/skyang9/skyang-notebook/raw/master/img/image-20250112175204912.png">
+<meta property="og:image" content="https://gitee.com/skyang9/skyang-notebook/raw/master/img/image-20250112190040916.png">
+<meta property="article:published_time" content="2025-01-12T08:28:04.000Z">
+<meta property="article:modified_time" content="2025-01-15T09:49:09.898Z">
+<meta property="article:author" content="Skyang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/skyang9/skyang-notebook/raw/master/img/image-20250112175204912.png">
+  
+  
+  
+  
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.29.1">
+
+  
+
+  
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+<body><div class="sitebg"><div class="siteblur"></div></div>
+
+<div class="l_body s:aa content tech" id="start" layout="post" ><aside class="l_left"><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="undefined" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">Skyang</div><div class="sub cap">个人博客</div></a></div></header>
+
+<div class="nav-area">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+<nav class="menu dis-select"><a class="nav-item active" title="博客" href="/" style="color:#1BCDFC"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"/><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"/></svg></a><a class="nav-item" title="文档" href="/wiki/" style="color:#3DC550"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M14.25 4.48v3.057c0 .111 0 .27.02.406a.936.936 0 0 0 .445.683a.96.96 0 0 0 .783.072c.13-.04.272-.108.378-.159L17 8.005l1.124.534c.106.05.248.119.378.16a.958.958 0 0 0 .783-.073a.936.936 0 0 0 .444-.683c.021-.136.021-.295.021-.406V3.031c.113-.005.224-.01.332-.013C21.154 2.98 22 3.86 22 4.933v11.21c0 1.112-.906 2.01-2.015 2.08c-.97.06-2.108.179-2.985.41c-1.082.286-1.99 1.068-3.373 1.436c-.626.167-1.324.257-1.627.323V5.174c.32-.079 1.382-.203 1.674-.371c.184-.107.377-.216.576-.323m5.478 8.338a.75.75 0 0 1-.546.91l-4 1a.75.75 0 0 1-.364-1.456l4-1a.75.75 0 0 1 .91.546" clip-rule="evenodd"/><path fill="currentColor" d="M18.25 3.151c-.62.073-1.23.18-1.75.336a8.2 8.2 0 0 0-.75.27v3.182l.75-.356l.008-.005a1.13 1.13 0 0 1 .492-.13c.047 0 .094.004.138.01c.175.029.315.1.354.12l.009.005l.749.356V3.647z"/><path fill="currentColor" d="M12 5.214c-.334-.064-1.057-.161-1.718-.339C8.938 4.515 8.05 3.765 7 3.487c-.887-.234-2.041-.352-3.018-.412C2.886 3.007 2 3.9 2 4.998v11.146c0 1.11.906 2.01 2.015 2.079c.97.06 2.108.179 2.985.41c.486.129 1.216.431 1.873.726c1.005.451 2.052.797 3.127 1.034z" opacity=".5"/><path fill="currentColor" d="M4.273 12.818a.75.75 0 0 1 .91-.545l4 1a.75.75 0 1 1-.365 1.455l-4-1a.75.75 0 0 1-.545-.91m.909-4.545a.75.75 0 1 0-.364 1.455l4 1a.75.75 0 0 0 .364-1.455z"/></svg></a><a class="nav-item" title="探索" href="/explore/" style="color:#FA6400"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M20 12a8 8 0 1 1-16 0a8 8 0 0 1 16 0" opacity=".5"/><path fill="currentColor" d="M17.712 5.453c1.047-.193 2.006-.259 2.797-.152c.77.103 1.536.393 1.956 1.064c.446.714.312 1.542-.012 2.258c-.33.728-.918 1.499-1.672 2.268c-1.516 1.547-3.836 3.226-6.597 4.697c-2.763 1.472-5.495 2.484-7.694 2.92c-1.095.217-2.098.299-2.923.201c-.8-.095-1.6-.383-2.032-1.075c-.47-.752-.296-1.63.07-2.379c.375-.768 1.032-1.586 1.872-2.403L4 12.416c0 .219.083.71.168 1.146c.045.23.09.444.123.596c-.652.666-1.098 1.263-1.339 1.756c-.277.567-.208.825-.145.925c.072.116.305.305.937.38c.609.073 1.44.018 2.455-.183c2.02-.4 4.613-1.351 7.28-2.772c2.667-1.42 4.85-3.015 6.23-4.423c.694-.707 1.15-1.334 1.377-1.836c.233-.515.167-.75.107-.844c-.07-.112-.289-.294-.883-.374c-.542-.072-1.272-.041-2.163.112L16.87 5.656c.338-.101.658-.17.842-.203"/></svg></a><a class="nav-item" title="社交" href="/friends/" style="color:#F44336"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m13.629 20.472l-.542.916c-.483.816-1.69.816-2.174 0l-.542-.916c-.42-.71-.63-1.066-.968-1.262c-.338-.197-.763-.204-1.613-.219c-1.256-.021-2.043-.098-2.703-.372a5 5 0 0 1-2.706-2.706C2 14.995 2 13.83 2 11.5v-1c0-3.273 0-4.91.737-6.112a5 5 0 0 1 1.65-1.651C5.59 2 7.228 2 10.5 2h3c3.273 0 4.91 0 6.113.737a5 5 0 0 1 1.65 1.65C22 5.59 22 7.228 22 10.5v1c0 2.33 0 3.495-.38 4.413a5 5 0 0 1-2.707 2.706c-.66.274-1.447.35-2.703.372c-.85.015-1.275.022-1.613.219c-.338.196-.548.551-.968 1.262" opacity=".5"/><path fill="currentColor" d="M10.99 14.308c-1.327-.978-3.49-2.84-3.49-4.593c0-2.677 2.475-3.677 4.5-1.609c2.025-2.068 4.5-1.068 4.5 1.609c0 1.752-2.163 3.615-3.49 4.593c-.454.335-.681.502-1.01.502c-.329 0-.556-.167-1.01-.502"/></svg></a></nav>
+</div>
+<div class="widgets">
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">专栏：Gym</span></div><div class="widget-body"><a class="item active" href="/2025/01/12/3%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/gym/"><span class="title">1.Gymnasium使用</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="item" href="/2025/01/16/3%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/transformer/"><span class="title">2.Transformers原理</span></a><a class="item" href="/2025/01/16/3%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/Grammer/"><span class="title">语法问题汇总</span></a></div></widget>
+
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/01/16/3%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/transformer/"><span class="title">2.Transformers原理</span></a><a class="item title" href="/2025/01/17/2%E8%AE%BA%E6%96%87/001%E5%9F%BA%E4%BA%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E7%9A%84RGB-D%E5%A4%9A%E6%A8%A1%E5%9E%8B/"><span class="title">1.Action chunking with transformer</span></a><a class="item title" href="/2025/01/18/2%E8%AE%BA%E6%96%87/003Attension_is_all_you_need/"><span class="title">3. Attension is all you need</span></a><a class="item title" href="/2025/01/18/2%E8%AE%BA%E6%96%87/002%E4%B8%80%E7%A7%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E7%9A%84%E5%8F%8C%E6%89%8B%E7%B2%BE%E7%BB%86%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/"><span class="title">2. Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware</span></a><a class="item title" href="/2025/01/18/1%E9%97%AE%E9%A2%98/20250118/"><span class="title">2025-1-18</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" id="menu" href="/topic">专栏</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/2025/01/12/3%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/gym/">Gym</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-01-12T08:28:04.000Z">2025-01-12</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-01-15T09:49:09.898Z">2025-01-15</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>1.Gymnasium使用</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h1 id="基础知识"><a class="markdownIt-Anchor" href="#基础知识"></a> 基础知识</h1>
+<h2 id="快速开始"><a class="markdownIt-Anchor" href="#快速开始"></a> 快速开始</h2>
+<p>注意点：</p>
+<ol>
+<li>make有了返回值，返回初始状态和辅助信息</li>
+<li>新增判断交互是否结束的标志：(terminated:任务成功/失败；truncated:任务超时被截断)</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gym</span><br><span class="line"></span><br><span class="line">env = gym.make(<span class="string">&quot;CartPole-v1&quot;</span>, render_mode=<span class="string">&quot;human&quot;</span>)</span><br><span class="line">observation, info = env.reset(seed=<span class="number">0</span>, options=&#123;&#125;)</span><br><span class="line"></span><br><span class="line">done = <span class="literal">False</span></span><br><span class="line"><span class="keyword">while</span> <span class="keyword">not</span> done:</span><br><span class="line">    action = env.action_space.sample()  <span class="comment"># agent policy that uses the observation and info</span></span><br><span class="line">    observation, reward, terminated, truncated, info = env.step(action)</span><br><span class="line"></span><br><span class="line">    done = terminated <span class="keyword">or</span> truncated</span><br><span class="line"></span><br><span class="line">env.close()</span><br></pre></td></tr></table></figure>
+<p>其余变化，参见：<a target="_blank" rel="noopener" href="https://gymnasium.farama.org/introduction/migration_guide/">Migration Guide - v0.21 to v1.0.0</a></p>
+<h2 id="定义参数"><a class="markdownIt-Anchor" href="#定义参数"></a> 定义参数</h2>
+<p>需掌握Argparse相关知识，这里定义了实验名称参数，默认值为当前的文件名。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建Argparse对象</span></span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加参数</span></span><br><span class="line">parser.add_argument(<span class="string">&quot;--exp-name&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, </span><br><span class="line">                    default=os.path.basename(__file__).rstrip(<span class="string">&quot;.py&quot;</span>),</span><br><span class="line">                    <span class="built_in">help</span>=<span class="string">&quot;the name of this experiment&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取参数</span></span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印参数</span></span><br><span class="line"><span class="built_in">print</span>(args.exp_name)</span><br></pre></td></tr></table></figure>
+<p>参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/software-develop/articles/18060482">详解Python中的argparse模块</a></p>
+<h2 id="tensorboard"><a class="markdownIt-Anchor" href="#tensorboard"></a> TensorBoard</h2>
+<p>启动Tensorboard：默认占用6006端口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensorboard --logdir=&lt;directory_name&gt;</span><br></pre></td></tr></table></figure>
+<p>注意点：</p>
+<ol>
+<li>日志名称由 实验名称、环境名称和随机数种子组成</li>
+<li>文本数据可视化：记录了所有参数的值</li>
+<li>折线图：画了一根<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mn>2</mn><mi>x</mi></mrow><annotation encoding="application/x-tex">y=2x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord mathnormal">x</span></span></span></span>的直线</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">run_name = <span class="string">f&quot;<span class="subst">&#123;args.exp_name&#125;</span>_<span class="subst">&#123;args.gym_id&#125;</span>_<span class="subst">&#123;args.seed&#125;</span>_<span class="subst">&#123;<span class="built_in">int</span>(time.time())&#125;</span>&quot;</span></span><br><span class="line">writer = SummaryWriter(<span class="string">f&quot;runs/<span class="subst">&#123;run_name&#125;</span>&quot;</span>)</span><br><span class="line">writer.add_text(</span><br><span class="line">    <span class="string">&quot;hyperparameters&quot;</span>,</span><br><span class="line">    <span class="string">&quot;|param|value|\n|-|-|\n%s&quot;</span> % </span><br><span class="line">    (<span class="string">&quot;\n&quot;</span>.join([<span class="string">f&quot;|<span class="subst">&#123;key&#125;</span>|<span class="subst">&#123;value&#125;</span>|&quot;</span> <span class="keyword">for</span> key, value <span class="keyword">in</span> <span class="built_in">vars</span>(args).items()]))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    writer.add_scalar(<span class="string">&quot;test_loss&quot;</span>, i*<span class="number">2</span>, global_step=i)</span><br></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gitee.com/skyang9/skyang-notebook/raw/master/img/image-20250112175204912.png" alt="image-20250112175204912" /></p>
+<h2 id="wandb"><a class="markdownIt-Anchor" href="#wandb"></a> wandb</h2>
+<p>登录，然后输入秘钥</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wandb login</span><br></pre></td></tr></table></figure>
+<p><strong>快速开始</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> wandb</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="comment"># start a new wandb run to track this script</span></span><br><span class="line">wandb.init(</span><br><span class="line">    <span class="comment"># set the wandb project where this run will be logged</span></span><br><span class="line">    project=<span class="string">&quot;CartPole-v1 with PPO&quot;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment"># track hyperparameters and run metadata</span></span><br><span class="line">    config=&#123;</span><br><span class="line">    <span class="string">&quot;learning_rate&quot;</span>: <span class="number">0.02</span>,</span><br><span class="line">    <span class="string">&quot;architecture&quot;</span>: <span class="string">&quot;CNN&quot;</span>,</span><br><span class="line">    <span class="string">&quot;dataset&quot;</span>: <span class="string">&quot;CIFAR-100&quot;</span>,</span><br><span class="line">    <span class="string">&quot;epochs&quot;</span>: <span class="number">10</span>,</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># simulate training</span></span><br><span class="line">epochs = <span class="number">10</span></span><br><span class="line">offset = random.random() / <span class="number">5</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, epochs):</span><br><span class="line">    acc = <span class="number">1</span> - <span class="number">2</span> ** -epoch - random.random() / epoch - offset</span><br><span class="line">    loss = <span class="number">2</span> ** -epoch + random.random() / epoch + offset</span><br><span class="line"></span><br><span class="line">    <span class="comment"># log metrics to wandb</span></span><br><span class="line">    wandb.log(&#123;<span class="string">&quot;acc&quot;</span>: acc, <span class="string">&quot;loss&quot;</span>: loss&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># [optional] finish the wandb run, necessary in notebooks</span></span><br><span class="line">wandb.finish()</span><br></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gitee.com/skyang9/skyang-notebook/raw/master/img/image-20250112190040916.png" alt="image-20250112190040916" /></p>
+<h2 id="神经网络初始化"><a class="markdownIt-Anchor" href="#神经网络初始化"></a> 神经网络初始化</h2>
+<p>对网络权重<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span>进行正交初始化</p>
+<p>对网络偏置<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">b</span></span></span></span>进行常量初始化</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">layer_init</span>(<span class="params">layer, std=np.sqrt(<span class="params"><span class="number">2</span></span>), bias_const=<span class="number">0.0</span></span>):</span><br><span class="line">    torch.nn.init.orthogonal_(layer.weight, std)</span><br><span class="line">    torch.nn.init.constant_(layer.bias, bias_const)</span><br><span class="line">    <span class="keyword">return</span> layer</span><br><span class="line"></span><br><span class="line">network = layer_init(nn.Linear(<span class="number">10</span>,<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(network.weight)</span><br><span class="line"><span class="built_in">print</span>(network.bias)</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Parameter containing:</span><br><span class="line">tensor([[-0.1399,  0.8439,  0.2065, -0.5902,  0.5584, -0.0929, -0.3182, -0.6442,-0.2000, -0.0243],[ 0.3908,  0.1530,  0.3163, -0.5720, -0.2370, -0.3248, -0.2348,  0.5811,0.2712,  0.8768]], requires<span class="emphasis">_grad=True)</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">Parameter containing:</span></span><br><span class="line"><span class="emphasis">tensor([0., 0.], requires_</span>grad=True)</span><br></pre></td></tr></table></figure>
+<h2 id="ppo初始化"><a class="markdownIt-Anchor" href="#ppo初始化"></a> PPO初始化</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">PPO</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,state_dim,hidden_dim,action_dim</span>):</span><br><span class="line">        <span class="variable language_">self</span>.critic = nn.Sequential(</span><br><span class="line">            layer_init(nn.Linear(state_dim, hidden_dim)),</span><br><span class="line">            nn.Tanh(),</span><br><span class="line">            layer_init(nn.Linear(hidden_dim, hidden_dim)),</span><br><span class="line">            nn.Tanh(),</span><br><span class="line">            layer_init(nn.Linear(hidden_dim, action_dim))</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.actor = nn.Sequential(</span><br><span class="line">            layer_init(nn.Linear(state_dim, hidden_dim)),</span><br><span class="line">            nn.Tanh(),</span><br><span class="line">            layer_init(nn.Linear(hidden_dim, hidden_dim)),</span><br><span class="line">            nn.Tanh(),</span><br><span class="line">            layer_init(nn.Linear(hidden_dim, action_dim))</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_action_and_value</span>(<span class="params">self, state, action=<span class="literal">None</span></span>):</span><br><span class="line">        logits = <span class="variable language_">self</span>.actor(state)                  <span class="comment"># 获取各动作的概率</span></span><br><span class="line">        probs  = Categorical(logits=logits)   <span class="comment"># 代表离散动作空间的概率分布</span></span><br><span class="line">        <span class="keyword">if</span> action <span class="keyword">is</span> <span class="literal">None</span>:                          <span class="comment"># 如果没有指定动作，则在分布上随机抽样</span></span><br><span class="line">            action = probs.sample()</span><br><span class="line">        <span class="comment"># 返回选取的动作、在该概率分布下选取这的动作的概率、概率分布的熵、评价网络的概率</span></span><br><span class="line">        <span class="keyword">return</span> action, probs.log_prob(action), probs.entropy(), <span class="variable language_">self</span>.critic(state)</span><br></pre></td></tr></table></figure>
+<h2 id="使用默认ppo进行游戏"><a class="markdownIt-Anchor" href="#使用默认ppo进行游戏"></a> 使用默认PPO进行游戏</h2>
+<p>注意点：</p>
+<ol>
+<li>state需要转化为Tensor类型</li>
+<li>action需要转化为numpy类型</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gymnasium <span class="keyword">as</span> gym</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建平衡杆游戏环境</span></span><br><span class="line">env = gym.make(<span class="string">&quot;CartPole-v1&quot;</span>, render_mode=<span class="string">&quot;human&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取神经网路层维度</span></span><br><span class="line">state_dim = env.observation_space.shape[<span class="number">0</span>]</span><br><span class="line">hidden_dim = <span class="number">4</span></span><br><span class="line">action_dim = env.action_space.n</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建PPO智能体决策</span></span><br><span class="line">agent = PPO(state_dim, hidden_dim, action_dim)</span><br><span class="line"></span><br><span class="line">state = env.reset()[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    state = torch.tensor(state, dtype=torch.float32)</span><br><span class="line">    action, t1, t2, t3 = agent.get_action_and_value(state)</span><br><span class="line">    next_state, reward, terminated, truncated, info = env.step(action.numpy())</span><br><span class="line">    state = next_state</span><br><span class="line">    done = terminated | truncated</span><br><span class="line">    <span class="keyword">if</span> done:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">env.close()</span><br></pre></td></tr></table></figure>
+<h1 id="cartpole-v1-solved-by-ppo"><a class="markdownIt-Anchor" href="#cartpole-v1-solved-by-ppo"></a> CartPole-v1 solved by PPO</h1>
+<h2 id="准备工作"><a class="markdownIt-Anchor" href="#准备工作"></a> 准备工作</h2>
+<h3 id="参数定义"><a class="markdownIt-Anchor" href="#参数定义"></a> 参数定义</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义参数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">parse_args</span>():</span><br><span class="line">    <span class="comment"># 创建parser对象</span></span><br><span class="line">    parser = argparse.ArgumentParser()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 添加参数</span></span><br><span class="line">    <span class="comment"># 这三个参数可以组成每次运行的日志名</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--exp-name&#x27;</span>,<span class="built_in">type</span>=<span class="built_in">str</span>,default=os.path.basename(__file__).rstrip(<span class="string">&quot;.py&quot;</span>))</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--gym-id&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="string">&#x27;CartPole-v1&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--seed&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 超参数</span></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--num-envs&quot;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">1</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&quot;--num-steps&quot;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">128</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--learning-rate&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, default=<span class="number">0.01</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--total-timesteps&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">250000</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&quot;--num-minibatches&quot;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">4</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&quot;--update-epochs&quot;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">4</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&quot;--gamma&quot;</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, default=<span class="number">0.99</span>)        <span class="comment"># 折扣因子(为0则注重当前奖励，为1则注重长远奖励)</span></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--clip-coef&quot;</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, default=<span class="number">0.2</span>)     <span class="comment"># PPO-clip截断因子</span></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--ent-coef&quot;</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, default=<span class="number">0.01</span>)     <span class="comment"># 熵项权重</span></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--vf-coef&quot;</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, default=<span class="number">0.5</span>)       <span class="comment"># 价值权重</span></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--max-grad-norm&quot;</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, default=<span class="number">0.5</span>) <span class="comment"># 最大更新梯度</span></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--target-kl&quot;</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, default=<span class="literal">None</span>)    <span class="comment"># KL散度约束</span></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--wandb-project-name&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>,</span><br><span class="line">                        default=<span class="string">&quot;CartPole-v1 with PPO&quot;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&quot;--wandb-entity&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 选项</span></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--cuda&quot;</span>, <span class="built_in">type</span>=<span class="keyword">lambda</span> x: <span class="built_in">bool</span>(strtobool(x)),</span><br><span class="line">                        default=<span class="literal">True</span>, nargs=<span class="string">&quot;?&quot;</span>, const=<span class="literal">True</span>)    <span class="comment"># 是否使用GPU</span></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--capture-video&quot;</span>, <span class="built_in">type</span>=<span class="keyword">lambda</span> x: <span class="built_in">bool</span>(strtobool(x)),</span><br><span class="line">                        default=<span class="literal">False</span>, nargs=<span class="string">&quot;?&quot;</span>, const=<span class="literal">True</span>)   <span class="comment"># 是否进行录像</span></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--track&quot;</span>, <span class="built_in">type</span>=<span class="keyword">lambda</span> x: <span class="built_in">bool</span>(strtobool(x)), default=<span class="literal">False</span>,</span><br><span class="line">                        nargs=<span class="string">&quot;?&quot;</span>, const=<span class="literal">True</span>)                  <span class="comment"># 是否使用wandb记录</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--torch-deterministic&#x27;</span>, <span class="built_in">type</span>=<span class="keyword">lambda</span> x: <span class="built_in">bool</span>(strtobool(x)),</span><br><span class="line">                        default=<span class="literal">True</span>, nargs=<span class="string">&quot;?&quot;</span>, const=<span class="literal">True</span>)    <span class="comment"># 确定性训练</span></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--anneal-lr&quot;</span>, <span class="built_in">type</span>=<span class="keyword">lambda</span> x: <span class="built_in">bool</span>(strtobool(x)),</span><br><span class="line">                        default=<span class="literal">True</span>, nargs=<span class="string">&quot;?&quot;</span>, const=<span class="literal">True</span>)    <span class="comment"># 是否动态调整学习率</span></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--gae&quot;</span>, <span class="built_in">type</span>=<span class="keyword">lambda</span> x: <span class="built_in">bool</span>(strtobool(x)),</span><br><span class="line">                        default=<span class="literal">True</span>, nargs=<span class="string">&quot;?&quot;</span>, const=<span class="literal">True</span>)    <span class="comment"># 是否使用广义优势估计</span></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--gae-lambda&quot;</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, default=<span class="number">0.95</span>)   <span class="comment"># 广义优势估计使用的折扣因子</span></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--norm-adv&quot;</span>, <span class="built_in">type</span>=<span class="keyword">lambda</span> x: <span class="built_in">bool</span>(strtobool(x)),</span><br><span class="line">                        default=<span class="literal">True</span>, nargs=<span class="string">&quot;?&quot;</span>, const=<span class="literal">True</span>)    <span class="comment"># 是否对优势函数值归一化</span></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--clip-vloss&quot;</span>, <span class="built_in">type</span>=<span class="keyword">lambda</span> x: <span class="built_in">bool</span>(strtobool(x)),</span><br><span class="line">                        default=<span class="literal">True</span>, nargs=<span class="string">&quot;?&quot;</span>, const=<span class="literal">True</span>)    <span class="comment"># 是否进行误差截断</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 解析参数，并返回</span></span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    args.batch_size = <span class="built_in">int</span>(args.num_envs * args.num_steps)</span><br><span class="line">    args.minibatch_size = <span class="built_in">int</span>(args.batch_size // args.num_minibatches)</span><br><span class="line">    <span class="keyword">return</span> args</span><br></pre></td></tr></table></figure>
+<h3 id="ppo定义"><a class="markdownIt-Anchor" href="#ppo定义"></a> PPO定义</h3>
+<p>网络初始化</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">layer_init</span>(<span class="params">layer, std=np.sqrt(<span class="params"><span class="number">2</span></span>), bias_const=<span class="number">0.0</span></span>):</span><br><span class="line">    torch.nn.init.orthogonal_(layer.weight, std)</span><br><span class="line">    torch.nn.init.constant_(layer.bias, bias_const)</span><br><span class="line">    <span class="keyword">return</span> layer</span><br></pre></td></tr></table></figure>
+<p>PPO</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">PPO</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, env</span>):</span><br><span class="line">        <span class="built_in">super</span>(PPO, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="variable language_">self</span>.critic = nn.Sequential(</span><br><span class="line">            layer_init(nn.Linear(np.array(env.observation_space.shape).prod(), <span class="number">64</span>)),</span><br><span class="line">            nn.Tanh(),</span><br><span class="line">            layer_init(nn.Linear(<span class="number">64</span>, <span class="number">64</span>)),</span><br><span class="line">            nn.Tanh(),</span><br><span class="line">            layer_init(nn.Linear(<span class="number">64</span>, <span class="number">1</span>), std=<span class="number">1.0</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.actor = nn.Sequential(</span><br><span class="line">            layer_init(nn.Linear(np.array(env.observation_space.shape).prod(), <span class="number">64</span>)),</span><br><span class="line">            nn.Tanh(),</span><br><span class="line">            layer_init(nn.Linear(<span class="number">64</span>, <span class="number">64</span>)),</span><br><span class="line">            nn.Tanh(),</span><br><span class="line">            layer_init(nn.Linear(<span class="number">64</span>, env.action_space.n), std=<span class="number">0.01</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_value</span>(<span class="params">self, state</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.critic(state)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_action_and_value</span>(<span class="params">self, state, action=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="comment"># state = torch.tensor(state, dtype=torch.float)</span></span><br><span class="line">        logits = <span class="variable language_">self</span>.actor(state)                  <span class="comment"># 获取各动作的概率</span></span><br><span class="line">        probs  = Categorical(logits=logits)         <span class="comment"># 代表离散动作空间的概率分布</span></span><br><span class="line">        <span class="keyword">if</span> action <span class="keyword">is</span> <span class="literal">None</span>:                          <span class="comment"># 如果没有指定动作，则在分布上随机抽样</span></span><br><span class="line">            action = probs.sample()</span><br><span class="line">        <span class="comment"># 返回选取的动作、在该概率分布下选取这的动作的概率、概率分布的熵、评价网络分数</span></span><br><span class="line">        <span class="keyword">return</span> action, probs.log_prob(action), probs.entropy(), <span class="variable language_">self</span>.critic(state)</span><br></pre></td></tr></table></figure>
+<h3 id="创建环境"><a class="markdownIt-Anchor" href="#创建环境"></a> 创建环境</h3>
+<p>这里使用了两个包装器，分别用于记录可视化数据和视屏。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">make_env</span>(<span class="params">gym_id, seed, capture_video, run_name</span>):</span><br><span class="line">    env = gym.make(gym_id)</span><br><span class="line">    env = gym.wrappers.RecordEpisodeStatistics(env)</span><br><span class="line">    <span class="keyword">if</span> capture_video:</span><br><span class="line">        env = gym.wrappers.VideoRecorder(env, <span class="string">f&quot;video/<span class="subst">&#123;run_name&#125;</span>.mp4&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 设置随机数种子</span></span><br><span class="line">    <span class="comment"># env.seed(seed) # gym26迁移至reset时设置</span></span><br><span class="line">    env.observation_space.seed(seed)</span><br><span class="line">    env.action_space.seed(seed)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> env</span><br></pre></td></tr></table></figure>
+<h2 id="main函数"><a class="markdownIt-Anchor" href="#main函数"></a> Main函数</h2>
+<h3 id="tensorboard可视化"><a class="markdownIt-Anchor" href="#tensorboard可视化"></a> TensorBoard可视化</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">args = parse_args()</span><br><span class="line">    run_name = <span class="string">f&quot;<span class="subst">&#123;args.gym_id&#125;</span>__<span class="subst">&#123;args.exp_name&#125;</span>__<span class="subst">&#123;args.seed&#125;</span>__<span class="subst">&#123;<span class="built_in">int</span>(time.time())&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># TensorBoard可视化</span></span><br><span class="line">    writer = SummaryWriter(<span class="string">f&quot;runs/<span class="subst">&#123;run_name&#125;</span>&quot;</span>)</span><br><span class="line">    writer.add_text(</span><br><span class="line">        <span class="string">&quot;hyperparameters&quot;</span>,</span><br><span class="line">        <span class="string">&quot;|param|value|\n|-|-|\n%s&quot;</span> %</span><br><span class="line">        (<span class="string">&quot;\n&quot;</span>.join([<span class="string">f&quot;|<span class="subst">&#123;key&#125;</span>|<span class="subst">&#123;value&#125;</span>|&quot;</span> <span class="keyword">for</span> key, value <span class="keyword">in</span> <span class="built_in">vars</span>(args).items()]))</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<h3 id="设置随机种子保证可重复性"><a class="markdownIt-Anchor" href="#设置随机种子保证可重复性"></a> 设置随机种子，保证可重复性</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 保证可复现性，设置随机数种子</span></span><br><span class="line">random.seed(args.seed)</span><br><span class="line">np.random.seed(args.seed)</span><br><span class="line">torch.manual_seed(args.seed)</span><br><span class="line">torch.backends.cudnn.deterministic = args.torch_deterministic</span><br></pre></td></tr></table></figure>
+<h3 id="生成环境-智能体和优化器"><a class="markdownIt-Anchor" href="#生成环境-智能体和优化器"></a> 生成环境、智能体和优化器</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 是否使用GPU</span></span><br><span class="line">device = torch.device(<span class="string">&quot;cuda:0&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义环境：该算法只适用于离散动作空间的环境</span></span><br><span class="line">env = make_env(args.gym_id, args.seed, args.capture_video, run_name)</span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">isinstance</span>(env.action_space, gym.spaces.Discrete)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义智能体和优化器</span></span><br><span class="line">agent = PPO(env).to(device)</span><br><span class="line">optimizer = torch.optim.Adam(agent.parameters(), lr=args.learning_rate, eps=<span class="number">1e-5</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="使用一个数组来记录状态-动作和奖励等信息"><a class="markdownIt-Anchor" href="#使用一个数组来记录状态-动作和奖励等信息"></a> 使用一个数组来记录状态、动作和奖励等信息</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">obs = torch.zeros((args.num_steps, args.num_envs) + env.observation_space.shape).to(device)</span><br><span class="line">    actions = torch.zeros((args.num_steps, args.num_envs) + env.action_space.shape).to(device)</span><br><span class="line">    logprobs = torch.zeros((args.num_steps, args.num_envs)).to(device)</span><br><span class="line">    rewards = torch.zeros((args.num_steps, args.num_envs)).to(device)</span><br><span class="line">    dones = torch.zeros((args.num_steps, args.num_envs)).to(device)</span><br><span class="line">    values = torch.zeros((args.num_steps, args.num_envs)).to(device)</span><br></pre></td></tr></table></figure>
+<h3 id="计算更新次数等信息"><a class="markdownIt-Anchor" href="#计算更新次数等信息"></a> 计算更新次数等信息</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># TRY NOT TO MODIFY: start the game</span></span><br><span class="line">global_step = <span class="number">0</span>                                        <span class="comment"># 总步长(与环境交互次数)</span></span><br><span class="line">start_time = time.time()                               <span class="comment"># 记录开始时间</span></span><br><span class="line"></span><br><span class="line">next_obs, info = env.reset(seed=args.seed)			   <span class="comment"># 设置随机种子</span></span><br><span class="line">next_obs = torch.Tensor(next_obs).to(device)		   <span class="comment"># Agent需要接收Tensor数据</span></span><br><span class="line"></span><br><span class="line">next_done = torch.zeros(<span class="number">1</span>).to(device)</span><br><span class="line">num_updates = args.total_timesteps // args.batch_size  <span class="comment"># 更新轮数(向下取整)</span></span><br></pre></td></tr></table></figure>
+<h3 id="学习率衰退"><a class="markdownIt-Anchor" href="#学习率衰退"></a> 学习率衰退</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> args.anneal_lr:</span><br><span class="line">    frac = <span class="number">1.0</span> - (update - <span class="number">1</span>) / num_updates</span><br><span class="line">    lrnow = frac * args.learning_rate</span><br><span class="line">    optimizer.param_groups[<span class="number">0</span>][<span class="string">&#x27;lr&#x27;</span>] = lrnow</span><br></pre></td></tr></table></figure>
+<h3 id="与环境交互并记录动作状态等信息"><a class="markdownIt-Anchor" href="#与环境交互并记录动作状态等信息"></a> 与环境交互，并记录动作状态等信息</h3>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mi>u</mi><mi>m</mi><mi mathvariant="normal">_</mi><mi>u</mi><mi>p</mi><mi>d</mi><mi>a</mi><mi>t</mi><mi>e</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">num\_updates</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.00444em;vertical-align:-0.31em;"></span><span class="mord mathnormal">n</span><span class="mord mathnormal">u</span><span class="mord mathnormal">m</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathnormal">u</span><span class="mord mathnormal">p</span><span class="mord mathnormal">d</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">s</span></span></span></span>为轮数，即<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mi>p</mi><mi>o</mi><mi>c</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">epoch</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">e</span><span class="mord mathnormal">p</span><span class="mord mathnormal">o</span><span class="mord mathnormal">c</span><span class="mord mathnormal">h</span></span></span></span></p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mi>u</mi><mi>m</mi><mi mathvariant="normal">_</mi><mi>s</mi><mi>t</mi><mi>e</mi><mi>p</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">num\_steps</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9250799999999999em;vertical-align:-0.31em;"></span><span class="mord mathnormal">n</span><span class="mord mathnormal">u</span><span class="mord mathnormal">m</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">p</span><span class="mord mathnormal">s</span></span></span></span>为一个轨迹</p>
+<p>对于一个环境来说，一个<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mi>u</mi><mi>m</mi><mi mathvariant="normal">_</mi><mi>s</mi><mi>t</mi><mi>e</mi><mi>p</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">num\_steps</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9250799999999999em;vertical-align:-0.31em;"></span><span class="mord mathnormal">n</span><span class="mord mathnormal">u</span><span class="mord mathnormal">m</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">p</span><span class="mord mathnormal">s</span></span></span></span>就是一个<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mi>a</mi><mi>t</mi><mi>c</mi><mi>h</mi><mi mathvariant="normal">_</mi><mi>s</mi><mi>i</mi><mi>z</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">batch\_size</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.00444em;vertical-align:-0.31em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">c</span><span class="mord mathnormal">h</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathnormal">s</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mord mathnormal">e</span></span></span></span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">args.batch_size = <span class="built_in">int</span>(args.num_envs * args.num_steps)</span><br><span class="line">args.minibatch_size = <span class="built_in">int</span>(args.batch_size // args.num_minibatches)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> step <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, args.num_steps):</span><br><span class="line">    <span class="comment"># 有点乱，先忽略一些细节</span></span><br><span class="line">    global_step += <span class="number">1</span></span><br><span class="line">    obs[step] = next_obs        <span class="comment"># 记录状态</span></span><br><span class="line">    dones[step] = next_done     <span class="comment"># 记录是否结束</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        action, logprob, _, value = agent.get_action_and_value(next_obs)</span><br><span class="line">        values[step] = value.flatten()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 记录第step步的动作和动作概率</span></span><br><span class="line">        actions[step] = action</span><br><span class="line">        logprobs[step] = logprob</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 与环境进行一次交互</span></span><br><span class="line">        next_obs, reward, terminated, truncated, info = env.step(action.cpu().numpy())</span><br><span class="line">        done = terminated | truncated</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 类型转化：gym需要numpy类型，而Agent需要tensor类型</span></span><br><span class="line">        next_obs = torch.Tensor(next_obs).to(device)</span><br><span class="line">        next_done = torch.Tensor([done]).to(device)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># # 记录日志</span></span><br><span class="line">        <span class="comment"># for item in info:</span></span><br><span class="line">        <span class="comment">#     if &quot;episode&quot; in item.keys():</span></span><br><span class="line">        <span class="comment">#         print(f&quot;global_step=&#123;global_step&#125;, episodic_return=&#123;item[&#x27;episode&#x27;][&#x27;r&#x27;]&#125;&quot;)</span></span><br><span class="line">        <span class="comment">#         writer.add_scalar(&quot;charts/episodic_return&quot;, item[&quot;episode&quot;][&quot;r&quot;], global_step)</span></span><br><span class="line">        <span class="comment">#         writer.add_scalar(&quot;charts/episodic_length&quot;, item[&quot;episode&quot;][&quot;l&quot;], global_step)</span></span><br><span class="line">        <span class="comment">#         break</span></span><br></pre></td></tr></table></figure>
+<h3 id="计算return和advantage"><a class="markdownIt-Anchor" href="#计算return和advantage"></a> 计算Return和Advantage</h3>
+<p>时序差分误差：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>δ</mi><mi>t</mi></msub><mo>≐</mo><msub><mi>R</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>+</mo><mi>γ</mi><mi>V</mi><mrow><mo fence="true">(</mo><msub><mi>S</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo fence="true">)</mo></mrow><mo>−</mo><mi>V</mi><mrow><mo fence="true">(</mo><msub><mi>S</mi><mi>t</mi></msub><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\delta_{t} \doteq R_{t+1}+\gamma V \left( S_{t+1} \right)-V \left( S_{t} \right)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.03785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≐</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span></span></p>
+<p>价值函数：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>V</mi><mo stretchy="false">(</mo><msub><mi>s</mi><mi>t</mi></msub><mo stretchy="false">)</mo><mo>=</mo><msub><mi>r</mi><mi>t</mi></msub><mo>+</mo><mi>γ</mi><msub><mi>V</mi><mi>θ</mi></msub><mo stretchy="false">(</mo><msub><mi>s</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">V(s_t) = r_{t}+\gamma V_{\theta} ( s_{t+1} )
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
+<p>n步TD法(代码只用了一步)</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>G</mi><mrow><mi>t</mi><mo>:</mo><mi>t</mi><mo>+</mo><mi>n</mi></mrow></msub><mo>≐</mo><msub><mi>R</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>+</mo><mi>γ</mi><msub><mi>R</mi><mrow><mi>t</mi><mo>+</mo><mn>2</mn></mrow></msub><mo>+</mo><mo>⋯</mo><mo>+</mo><msup><mi>γ</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msup><msub><mi>R</mi><mrow><mi>t</mi><mo>+</mo><mi>n</mi></mrow></msub><mo>+</mo><msup><mi>γ</mi><mi>n</mi></msup><msub><mi>V</mi><mrow><mi>t</mi><mo>+</mo><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mrow><mo fence="true">(</mo><msub><mi>S</mi><mrow><mi>t</mi><mo>+</mo><mi>n</mi></mrow></msub><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">G_{t : t+n} \doteq R_{t+1}+\gamma R_{t+2}+\cdots+\gamma^{n-1} R_{t+n}+\gamma^{n} V_{t+n-1} \left( S_{t+n} \right)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathnormal">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.28055599999999997em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mrel mtight">:</span><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≐</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.072439em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.864108em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.28055599999999997em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.28055599999999997em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span></span></p>
+<p>优势函数：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msup><mi>A</mi><mrow><mi>π</mi><mo separator="true">,</mo><mi>γ</mi></mrow></msup><mrow><mo fence="true">(</mo><msub><mi>s</mi><mi>t</mi></msub><mo separator="true">,</mo><msub><mi>a</mi><mi>t</mi></msub><mo fence="true">)</mo></mrow><mo>:</mo><mo>=</mo><msup><mi>Q</mi><mrow><mi>π</mi><mo separator="true">,</mo><mi>γ</mi></mrow></msup><mrow><mo fence="true">(</mo><msub><mi>s</mi><mi>t</mi></msub><mo separator="true">,</mo><msub><mi>a</mi><mi>t</mi></msub><mo fence="true">)</mo></mrow><mo>−</mo><msup><mi>V</mi><mrow><mi>π</mi><mo separator="true">,</mo><mi>γ</mi></mrow></msup><mrow><mo fence="true">(</mo><msub><mi>s</mi><mi>t</mi></msub><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">A^{\pi, \gamma} \left( s_{t}, a_{t} \right) :=Q^{\pi, \gamma} \left( s_{t}, a_{t} \right)-V^{\pi, \gamma} \left( s_{t} \right)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714392em;"><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">π</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05556em;">γ</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">Q</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714392em;"><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">π</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05556em;">γ</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714392em;"><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">π</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05556em;">γ</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span></span></p>
+<p>广义优势估计：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    next_value = agent.get_value(next_obs).reshape(-<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span> args.gae:</span><br><span class="line">        advantages = torch.zeros_like(rewards).to(device)</span><br><span class="line">        lastgaelam = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">reversed</span>(<span class="built_in">range</span>(args.num_steps)):</span><br><span class="line">            <span class="keyword">if</span> t == args.num_steps - <span class="number">1</span>:</span><br><span class="line">                nextnonterminal = <span class="number">1.0</span> - next_done</span><br><span class="line">                nextvalues = next_value</span><br><span class="line">                <span class="keyword">else</span> :</span><br><span class="line">                    nextnonterminal = <span class="number">1.0</span> - dones[t+<span class="number">1</span>]</span><br><span class="line">                    nextvalues = values[t+<span class="number">1</span>]</span><br><span class="line">                    delta = rewards[t] + args.gamma * nextvalues * nextnonterminal - values[t]</span><br><span class="line">                    advantages[t] = lastgaelam = delta + args.gamma * args.gae_lambda * nextnonterminal * lastgaelam</span><br><span class="line">                    returns = advantages + values</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    advantages = torch.zero_like(rewards).to(device)</span><br><span class="line">                    <span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">reversed</span>(<span class="built_in">range</span>(args.num_steps)):</span><br><span class="line">                        <span class="keyword">if</span> t == args.num_steps - <span class="number">1</span>:</span><br><span class="line">                            nextnonterminal = <span class="number">1.0</span> - next_done</span><br><span class="line">                            nextvalues = next_value</span><br><span class="line">                        <span class="keyword">else</span>:</span><br><span class="line">                            nextnonterminal = <span class="number">1.0</span> - dones[t + <span class="number">1</span>]</span><br><span class="line">                            nextvalues = values[t + <span class="number">1</span>]</span><br><span class="line">                            returns[t] = rewards[t] + args.gamma * nextvalues * nextnonterminal</span><br><span class="line">                            advantages = returns - values</span><br></pre></td></tr></table></figure>
+
+<div class="article-footer fs14">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    </div>
+</article>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2025/01/16/3%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/transformer/">2.Transformers原理</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2025/01/11/1%E9%97%AE%E9%A2%98/robosuite-problem/">robosuite_problem</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Skyang</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.29.1">Stellar 1.29.1</a> 主题创建。<br />
+本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B"><span class="toc-text"> 快速开始</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E5%8F%82%E6%95%B0"><span class="toc-text"> 定义参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tensorboard"><span class="toc-text"> TensorBoard</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#wandb"><span class="toc-text"> wandb</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text"> 神经网络初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ppo%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text"> PPO初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E9%BB%98%E8%AE%A4ppo%E8%BF%9B%E8%A1%8C%E6%B8%B8%E6%88%8F"><span class="toc-text"> 使用默认PPO进行游戏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-text"> 准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="toc-text"> 参数定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ppo%E5%AE%9A%E4%B9%89"><span class="toc-text"> PPO定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%8E%AF%E5%A2%83"><span class="toc-text"> 创建环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#main%E5%87%BD%E6%95%B0"><span class="toc-text"> Main函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#tensorboard%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-text"> TensorBoard可视化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E9%9A%8F%E6%9C%BA%E7%A7%8D%E5%AD%90%E4%BF%9D%E8%AF%81%E5%8F%AF%E9%87%8D%E5%A4%8D%E6%80%A7"><span class="toc-text"> 设置随机种子，保证可重复性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E7%8E%AF%E5%A2%83-%E6%99%BA%E8%83%BD%E4%BD%93%E5%92%8C%E4%BC%98%E5%8C%96%E5%99%A8"><span class="toc-text"> 生成环境、智能体和优化器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84%E6%9D%A5%E8%AE%B0%E5%BD%95%E7%8A%B6%E6%80%81-%E5%8A%A8%E4%BD%9C%E5%92%8C%E5%A5%96%E5%8A%B1%E7%AD%89%E4%BF%A1%E6%81%AF"><span class="toc-text"> 使用一个数组来记录状态、动作和奖励等信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9B%B4%E6%96%B0%E6%AC%A1%E6%95%B0%E7%AD%89%E4%BF%A1%E6%81%AF"><span class="toc-text"> 计算更新次数等信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%8E%87%E8%A1%B0%E9%80%80"><span class="toc-text"> 学习率衰退</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E7%8E%AF%E5%A2%83%E4%BA%A4%E4%BA%92%E5%B9%B6%E8%AE%B0%E5%BD%95%E5%8A%A8%E4%BD%9C%E7%8A%B6%E6%80%81%E7%AD%89%E4%BF%A1%E6%81%AF"><span class="toc-text"> 与环境交互，并记录动作状态等信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97return%E5%92%8Cadvantage"><span class="toc-text"> 计算Return和Advantage</span></a></li></ol></li></ol></div><div class="widget-footer">
+
+<a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel blur'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+<script type="text/javascript">
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+  };
+  const deps = {
+    jquery: `https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js`,
+    marked: `https://cdn.jsdelivr.net/npm/marked@13.0.1/lib/marked.umd.min.js`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+    
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      let retryTimes = 3;
+      utils.onLoading(el);
+      function req() {
+        return new Promise((resolve, reject) => {
+          let status = 0; // 0 等待 1 完成 2 超时
+          let timer = setTimeout(() => {
+            if (status === 0) {
+              status = 2;
+              timer = null;
+              reject('请求超时');
+              if (retryTimes == 0) {
+                onFailure();
+              }
+            }
+          }, 5000);
+          fetch(url).then(function(response) {
+            if (status !== 2) {
+              clearTimeout(timer);
+              resolve(response);
+              timer = null;
+              status = 1;
+            }
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('Network response was not ok.');
+          }).then(function(data) {
+            retryTimes = 0;
+            utils.onLoadSuccess(el);
+            callback(data);
+          }).catch(function(error) {
+            if (retryTimes > 0) {
+              retryTimes -= 1;
+              setTimeout(() => {
+                req();
+              }, 5000);
+            } else {
+              utils.onLoadFailure(el);
+              onFailure();
+            }
+          });
+        });
+      }
+      req();
+    },
+  };
+</script>
+
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+
+<!-- required -->
+<script src="/js/main.js?v=1.29.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    applyThemeToGiscus(theme)
+  }
+
+  const applyThemeToGiscus = (theme) => {
+    theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    }
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+</script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error)';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const els = document.getElementsByClassName('ds-memos');
+    if (els != undefined && els.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    processEscapes: true
+  }
+});
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  }
+});
+MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for(i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
